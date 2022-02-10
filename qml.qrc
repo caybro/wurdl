@@ -4,5 +4,7 @@
         <file>Cell.qml</file>
         <file>KbdLetter.qml</file>
         <file>KbdRow.qml</file>
+        <file>data/cs_CZ.dict</file>
+        <file>data/cs_CZ.words5</file>
     </qresource>
 </RCC>

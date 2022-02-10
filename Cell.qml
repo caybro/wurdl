@@ -11,7 +11,7 @@ Rectangle {
     radius: 6
     border.width: 2
     border.color: Positioner.index === game.currentIndex ? Material.accent : "black"
-    Behavior on border.color { ColorAnimation {} }
+    //Behavior on border.color { ColorAnimation {} }
     color: "aliceblue"
     Behavior on color { ColorAnimation {} }
 

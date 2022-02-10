@@ -10,6 +10,8 @@ Button {
     text: modelData
     font.pixelSize: Qt.application.font.pixelSize * 1.4
 
+    signal letterPressed(string letter)
+
     // font color
     Material.foreground: text === game.checkSymbol ? Material.color(Material.Green)
                                                    : (text === game.deleteSymbol ? Material.color(Material.Red) : Material.foreground)
@@ -25,10 +27,9 @@ Button {
             return game.currentIndex > 0 && game.currentIndex <= Wurdl.totalCells;
         }
 
-        return true;
+        // enable letters only when the last line got accepted (thus incrementing the currentRow)
+        return Math.trunc(game.currentIndex/Wurdl.totalColumns) <= game.currentRow
     }
 
     onClicked: root.letterPressed(text)
-
-    signal letterPressed(string letter)
 }

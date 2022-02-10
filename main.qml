@@ -14,6 +14,13 @@ ApplicationWindow {
     visible: true
     title: qsTr("Wurdl")
 
+    Component.onCompleted: {
+        console.info("!!! Today's word index:", Wurdl.todaysWordIndex)
+        console.info("!!! Today's word:", Wurdl.todaysGameWord)
+        console.info("!!! Random word:", Wurdl.randomGameWord())
+        console.info("!!! Is today's word in dictionary?", Wurdl.checkWord(Wurdl.todaysGameWord))
+    }
+
     Settings {
         property alias x: root.x
         property alias y: root.y
@@ -28,27 +35,44 @@ ApplicationWindow {
         readonly property string checkSymbol: "✔"
         readonly property string deleteSymbol: "⌫"
 
+        property int currentRow: 0
         property int currentIndex: 0
+        onCurrentIndexChanged: {
+            console.info("Current index:", currentIndex);
+        }
 
         function newGame() {
             currentIndex = 0;
+            currentRow = 0;
         }
 
         function putLetter(index, letter) {
             gameGridRepeater.itemAt(game.currentIndex).letter = letter;
             currentIndex++;
-            console.info("Current index:", currentIndex);
         }
 
         function removeLastLetter() {
             currentIndex--;
             gameGridRepeater.itemAt(currentIndex).letter = "";
-            console.info("Current index:", currentIndex);
+        }
+
+        function currentLineWord() {
+            var result = [];
+            for (let i = 0; i < Wurdl.totalColumns; i++) {
+                const cell = gameGridRepeater.itemAt((game.currentRow+1) * i);
+                result.push(cell.letter);
+            }
+
+            return result.join('');
         }
 
         function keyPressed(letter) {
             if (letter === checkSymbol) {
                 console.info("!!! OK pressed")
+                const cw = currentLineWord();
+                console.info("!!! Checking current line:", cw)
+                const wordOk = Wurdl.checkWord(cw);
+                console.info("!!! Current word in dictionary:", wordOk)
             } else if (letter === deleteSymbol) {
                 console.info("!!! Delete pressed")
                 removeLastLetter();
