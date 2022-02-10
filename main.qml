@@ -17,7 +17,7 @@ ApplicationWindow {
     Component.onCompleted: {
         console.info("!!! Today's word index:", Wurdl.todaysWordIndex)
         console.info("!!! Today's word:", Wurdl.todaysGameWord)
-        console.info("!!! Random word:", Wurdl.randomGameWord())
+        //console.info("!!! Random word:", Wurdl.randomGameWord())
         console.info("!!! Is today's word in dictionary?", Wurdl.checkWord(Wurdl.todaysGameWord))
     }
 
@@ -30,20 +30,55 @@ ApplicationWindow {
 
     QtObject {
         id: game
-        // TODO dictionary
-        readonly property string currentGameWord: "zhasl"
         readonly property string checkSymbol: "✔"
         readonly property string deleteSymbol: "⌫"
 
         property int currentRow: 0
+        onCurrentRowChanged: {
+            console.info("Current row changed:", currentRow)
+            Qt.callLater(recalcMatchingLetters);
+        }
+
         property int currentIndex: 0
         onCurrentIndexChanged: {
             console.info("Current index:", currentIndex);
         }
 
+        property var exactMatchingLetters: []
+        property var partiallyMatchingLetters: []
+        property var usedLetters: []
+
+        function recalcMatchingLetters() {
+            var exactMatches = [];
+            var partialMatches = [];
+            var otherLetters = []
+            for (let i = 0; i < currentIndex; i++) {
+                const cell = gameGridRepeater.itemAt(i);
+                console.info("!!! CHECKING CELL FOR MATCHES:", i);
+                if (cell.hasExactMatch && !exactMatches.includes(cell.letter)) {
+                    console.info("!!! EXACT:", cell.letter);
+                    exactMatches.push(cell.letter);
+                } else if (cell.hasPartialMatch && !partialMatches.includes(cell.letter)) {
+                    console.info("!!! PARTIAL:", cell.letter);
+                    partialMatches.push(cell.letter);
+                } else if (!otherLetters.includes(cell.letter)) {
+                    otherLetters.push(cell.letter);
+                }
+            }
+            console.info("Exact matching kbd letters:", exactMatches);
+            console.info("Partially matching kbd letters:", partialMatches);
+            console.info("Other used kbd letters:", otherLetters);
+            game.exactMatchingLetters = exactMatches;
+            game.partiallyMatchingLetters = partialMatches;
+            game.usedLetters = otherLetters;
+        }
+
         function newGame() {
             currentIndex = 0;
             currentRow = 0;
+            exactMatchingLetters.length = 0;
+            partiallyMatchingLetters.length = 0;
+            usedLetters.length = 0;
         }
 
         function putLetter(index, letter) {
@@ -56,10 +91,10 @@ ApplicationWindow {
             gameGridRepeater.itemAt(currentIndex).letter = "";
         }
 
-        function currentLineWord() {
+        function currentRowWord() {
             var result = [];
             for (let i = 0; i < Wurdl.totalColumns; i++) {
-                const cell = gameGridRepeater.itemAt((game.currentRow+1) * i);
+                const cell = gameGridRepeater.itemAt(currentRow * Wurdl.totalColumns + i);
                 result.push(cell.letter);
             }
 
@@ -69,15 +104,21 @@ ApplicationWindow {
         function keyPressed(letter) {
             if (letter === checkSymbol) {
                 console.info("!!! OK pressed")
-                const cw = currentLineWord();
-                console.info("!!! Checking current line:", cw)
+                const cw = currentRowWord();
+                console.info("!!! Checking current row:", currentRow, "; current row's word:", cw)
                 const wordOk = Wurdl.checkWord(cw);
-                console.info("!!! Current word in dictionary:", wordOk)
+                console.info("!!! Current word in dictionary:", wordOk);
+                if (wordOk) {
+                    currentRow++; // TODO check for win or loss on the last row
+                } else {
+                    console.warn("Current word not in the dictionary:", cw);
+                    // TODO display a msg dialog
+                }
             } else if (letter === deleteSymbol) {
                 console.info("!!! Delete pressed")
                 removeLastLetter();
             } else {
-                console.info("!!! Letter pressed", letter)
+                //console.info("!!! Letter pressed", letter)
                 putLetter(currentIndex, letter);
             }
         }

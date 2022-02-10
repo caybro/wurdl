@@ -17,14 +17,24 @@ Button {
                                                    : (text === game.deleteSymbol ? Material.color(Material.Red) : Material.foreground)
 
     // bg color
-    // TODO
-    Material.background: "aliceblue"
+    Material.background: {
+        if (root.text !== game.checkSymbol && root.text !== game.deleteSymbol) {
+            if (game.exactMatchingLetters.includes(root.text))
+                return Material.color(Material.Green);
+            else if (game.partiallyMatchingLetters.includes(root.text))
+                return Material.color(Material.Orange);
+            else if (game.usedLetters.includes(root.text))
+                return Material.color(Material.Grey);
+        }
+
+        return "aliceblue";
+    }
 
     enabled: {
         if (text === game.checkSymbol) {
-            return game.currentIndex > 0 && game.currentIndex % Wurdl.totalColumns === 0 && game.currentIndex <= Wurdl.totalCells;
+            return game.currentIndex > game.currentRow * Wurdl.totalColumns && game.currentIndex % Wurdl.totalColumns === 0 && game.currentIndex <= Wurdl.totalCells;
         } else if (text === game.deleteSymbol) {
-            return game.currentIndex > 0 && game.currentIndex <= Wurdl.totalCells;
+            return game.currentIndex > game.currentRow * Wurdl.totalColumns && game.currentIndex <= Wurdl.totalCells;
         }
 
         // enable letters only when the last line got accepted (thus incrementing the currentRow)
