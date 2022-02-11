@@ -13,13 +13,12 @@ class WurdlController : public QObject {
   Q_PROPERTY(int totalColumns READ totalColumns CONSTANT)
   Q_PROPERTY(int totalCells READ totalCells CONSTANT)
 
-  Q_PROPERTY(int todaysWordIndex READ todaysWordIndex CONSTANT)
-  Q_PROPERTY(QString todaysGameWord READ todaysGameWord CONSTANT)
-
  public:
   explicit WurdlController(QObject* parent = nullptr);
 
-  Q_INVOKABLE QString randomGameWord() const;
+  Q_INVOKABLE int todaysWordIndex() const;
+  Q_INVOKABLE int randomWordIndex() const;
+  Q_INVOKABLE QString getWord(int index) const;
 
   Q_INVOKABLE bool checkWord(const QString& word) const;
 
@@ -28,14 +27,10 @@ class WurdlController : public QObject {
   constexpr int totalColumns() const { return 5; }
   constexpr int totalCells() const { return totalRows() * totalColumns(); }
 
-  int todaysWordIndex() const;
-  int randomWordIndex() const;
-  QString todaysGameWord() const;
-
   void loadWords();
   void loadDict();
 
-  const QDate m_birthDate{2022, 02, 02};
+  const QDate m_birthDate{2021, 02, 02};
   std::vector<QString> m_gameWords;
   std::vector<QString> m_dict;
 };

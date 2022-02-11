@@ -15,20 +15,15 @@ int WurdlController::todaysWordIndex() const {
   const auto offset = m_birthDate.daysTo(QDate::currentDate());
   if (offset >= 0 && offset < static_cast<int>(m_gameWords.size()))
     return offset;
-  else  // ran out of words?
-    return randomWordIndex();
+  return -1;
 }
 
 int WurdlController::randomWordIndex() const {
   return QRandomGenerator::global()->bounded(0, m_gameWords.size());
 }
 
-QString WurdlController::todaysGameWord() const {
-  return m_gameWords[todaysWordIndex()];
-}
-
-QString WurdlController::randomGameWord() const {
-  return m_gameWords[randomWordIndex()];
+QString WurdlController::getWord(int index) const {
+  return m_gameWords[index];
 }
 
 bool WurdlController::checkWord(const QString& word) const {

@@ -34,7 +34,7 @@ ApplicationWindow {
                     MenuItem {
                         icon.source: "qrc:/icons/outline_casino_black_24dp.png"
                         text: qsTr("Random Game")
-                        enabled: false // TODO
+                        onClicked: game.newGame(Wurdl.randomWordIndex())
                     }
                     MenuItem {
                         icon.source: "qrc:/icons/outline_history_black_24dp.png"
@@ -56,14 +56,14 @@ ApplicationWindow {
                 Layout.alignment: Qt.AlignCenter
                 horizontalAlignment: Label.AlignHCenter
                 elide: Label.ElideMiddle
-                text: qsTr("Game number %1").arg(Wurdl.todaysWordIndex+1)
+                text: qsTr("Game number %1").arg(game.currentGameIndex+1)
                 font.pixelSize: Qt.application.font.pixelSize * 1.5
             }
             ToolButton {
                 Layout.alignment: Qt.AlignRight
                 icon.source: "qrc:/icons/outline_restart_alt_black_24dp.png"
                 font.pixelSize: Qt.application.font.pixelSize * 1.5
-                onClicked: game.newGame()
+                onClicked: game.newGame(game.currentGameIndex)
                 ToolTip.text: qsTr("Restart Game")
                 ToolTip.visible: hovered
             }
@@ -71,10 +71,10 @@ ApplicationWindow {
     }
 
     Component.onCompleted: {
-        console.info("!!! Today's word index:", Wurdl.todaysWordIndex)
-        console.info("!!! Today's word:", Wurdl.todaysGameWord)
-        console.info("!!! Random word:", Wurdl.randomGameWord())
-        console.info("!!! Is today's word in dictionary?", Wurdl.checkWord(Wurdl.todaysGameWord))
+        console.info("!!! Today's word index:", game.currentGameIndex)
+        console.info("!!! Today's word:", game.currentGameWord)
+        console.info("!!! Random word:", Wurdl.getWord(Wurdl.randomWordIndex()))
+        console.info("!!! Is today's word in dictionary?", Wurdl.checkWord(game.currentGameWord))
     }
 
     Settings {
@@ -102,6 +102,10 @@ ApplicationWindow {
         id: game
         readonly property string checkSymbol: "✔"
         readonly property string deleteSymbol: "⌫"
+
+        property int currentGameIndex: Wurdl.todaysWordIndex()
+        readonly property string currentGameWord: Wurdl.getWord(currentGameIndex)
+        onCurrentGameWordChanged: console.info("!!! NEW GAME WORD:", currentGameWord)
 
         property int currentRow: 0
         onCurrentRowChanged: {
@@ -147,7 +151,7 @@ ApplicationWindow {
             usedLetters = otherLetters;
         }
 
-        function newGame() {
+        function newGame(newIndex) {
             for (let i = 0; i < currentIndex; i++) {
                 gameGridRepeater.itemAt(i).letter = "";
             }
@@ -158,6 +162,7 @@ ApplicationWindow {
             exactMatchingLetters = [];
             partiallyMatchingLetters = [];
             usedLetters.length = [];
+            currentGameIndex = newIndex ?? Wurdl.randomWordIndex()
         }
 
         function putLetter(index, letter) {
@@ -186,7 +191,7 @@ ApplicationWindow {
                 const cw = currentRowWord();
                 console.info("!!! Checking current row:", currentRow, "; current row's word:", cw)
 
-                if (cw === Wurdl.todaysGameWord) { // game won
+                if (cw === game.currentGameWord) { // game won
                     currentRow++;
                     gameWon = true;
                     dlg.title = qsTr("Game Won!");
@@ -204,7 +209,7 @@ ApplicationWindow {
                         gameLost = true;
                         dlg.title = qsTr("Game Lost :(");
                         dlg.text = qsTr("Unfortunately you couldn't make it this time<br>" +
-                                        "The word was: '%1'").arg(Wurdl.todaysGameWord);
+                                        "The word was: '%1'").arg(game.currentGameWord);
                         dlg.open();
                         return;
                     }
