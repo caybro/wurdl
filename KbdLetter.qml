@@ -14,7 +14,7 @@ Button {
 
     // font color
     Material.foreground: text === game.checkSymbol ? Material.color(Material.Green)
-                                                   : (text === game.deleteSymbol ? Material.color(Material.Red) : Material.foreground)
+                                                   : text === game.deleteSymbol ? Material.color(Material.Red) : undefined
 
     // bg color
     Material.background: {
@@ -27,8 +27,6 @@ Button {
             else if (game.usedLetters.includes(root.text))
                 return Material.color(Material.Grey);
         }
-
-        return "aliceblue";
     }
 
     enabled: {

@@ -15,7 +15,7 @@ Rectangle {
     //Behavior on border.color { ColorAnimation {} }
 
     // highlight cell background based on matches against the current game word
-    color: hasExactMatch ? Material.color(Material.Green) : hasPartialMatch ? Material.color(Material.Orange) : "aliceblue"
+    color: hasExactMatch ? Material.color(Material.Green) : hasPartialMatch ? Material.color(Material.Orange) : Material.backgroundColor
     Behavior on color { ColorAnimation {} }
 
     readonly property int row: Positioner.index / Wurdl.totalColumns

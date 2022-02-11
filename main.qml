@@ -2,6 +2,7 @@ import QtQuick 2.15
 import QtQuick.Window 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
+import QtQuick.Controls.Material 2.15
 
 import Qt.labs.settings 1.1
 
@@ -14,11 +15,12 @@ ApplicationWindow {
     visible: true
     title: qsTr("Wurdl")
 
+    //Material.theme: Material.Dark
+
     header: ToolBar {
         RowLayout {
             width: parent.width
             Label {
-                //Layout.fillWidth: true
                 anchors.centerIn: parent
                 horizontalAlignment: Label.AlignHCenter
                 elide: Label.ElideMiddle
@@ -62,6 +64,8 @@ ApplicationWindow {
             anchors.centerIn: parent
         }
     }
+
+    // TODO make a first run / help dialog
 
     QtObject {
         id: game
