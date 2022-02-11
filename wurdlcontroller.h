@@ -4,8 +4,6 @@
 #include <QObject>
 #include <QmlTypeAndRevisionsRegistration>
 
-class QFile;
-
 class WurdlController : public QObject {
   Q_OBJECT
   QML_NAMED_ELEMENT(Wurdl)

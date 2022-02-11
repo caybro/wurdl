@@ -14,10 +14,33 @@ ApplicationWindow {
     visible: true
     title: qsTr("Wurdl")
 
+    header: ToolBar {
+        RowLayout {
+            width: parent.width
+            Label {
+                //Layout.fillWidth: true
+                anchors.centerIn: parent
+                horizontalAlignment: Label.AlignHCenter
+                elide: Label.ElideMiddle
+                text: qsTr("Game number %1").arg(Wurdl.todaysWordIndex+1)
+                font.pixelSize: Qt.application.font.pixelSize * 1.5
+            }
+
+            ToolButton {
+                Layout.alignment: Qt.AlignRight
+                icon.source: "qrc:/icons/outline_restart_alt_black_24dp.png"
+                font.pixelSize: Qt.application.font.pixelSize * 1.5
+                onClicked: game.newGame()
+                ToolTip.text: qsTr("Restart Game")
+                ToolTip.visible: hovered
+            }
+        }
+    }
+
     Component.onCompleted: {
         console.info("!!! Today's word index:", Wurdl.todaysWordIndex)
         console.info("!!! Today's word:", Wurdl.todaysGameWord)
-        //console.info("!!! Random word:", Wurdl.randomGameWord())
+        console.info("!!! Random word:", Wurdl.randomGameWord())
         console.info("!!! Is today's word in dictionary?", Wurdl.checkWord(Wurdl.todaysGameWord))
     }
 
@@ -90,6 +113,9 @@ ApplicationWindow {
         }
 
         function newGame() {
+            for (let i = 0; i < currentIndex; i++) {
+                gameGridRepeater.itemAt(i).letter = "";
+            }
             currentIndex = 0;
             currentRow = 0;
             gameWon = false;

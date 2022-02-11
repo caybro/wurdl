@@ -6,5 +6,7 @@
         <file>KbdRow.qml</file>
         <file>data/cs_CZ.dict</file>
         <file>data/cs_CZ.words5</file>
+        <file>icons/outline_restart_alt_black_24dp.png</file>
+        <file>icons/outline_restart_alt_black_24dp@2x.png</file>
     </qresource>
 </RCC>

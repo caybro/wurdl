@@ -29,6 +29,7 @@ Rectangle {
         id: label
         anchors.centerIn: parent
         font.capitalization: Font.AllUppercase
+        font.weight: Font.DemiBold
         //text: "%1,%2".arg(root.row).arg(root.column)
         font.pixelSize: Qt.application.font.pixelSize * 1.6
     }

@@ -19,6 +19,7 @@ Button {
     // bg color
     Material.background: {
         if (root.text !== game.checkSymbol && root.text !== game.deleteSymbol) {
+            // TODO highlight if both exact and partial match
             if (game.exactMatchingLetters.includes(root.text))
                 return Material.color(Material.Green);
             else if (game.partiallyMatchingLetters.includes(root.text))
