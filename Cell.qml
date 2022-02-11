@@ -10,7 +10,8 @@ Rectangle {
     height: 60
     radius: 6
     border.width: 2
-    border.color: Positioner.index === game.currentIndex ? Material.accent : Material.foreground
+    border.color: !game.gameOver && Positioner.index === game.currentIndex ? Material.accent
+                                                                           : Material.foreground
     //Behavior on border.color { ColorAnimation {} }
 
     // highlight cell background based on matches against the current game word

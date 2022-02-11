@@ -31,7 +31,9 @@ Button {
     }
 
     enabled: {
-        if (text === game.checkSymbol) {
+        if (game.gameOver) {
+            return false;
+        } else  if (text === game.checkSymbol) {
             return game.currentIndex > game.currentRow * Wurdl.totalColumns && game.currentIndex % Wurdl.totalColumns === 0 && game.currentIndex <= Wurdl.totalCells;
         } else if (text === game.deleteSymbol) {
             return game.currentIndex > game.currentRow * Wurdl.totalColumns && game.currentIndex <= Wurdl.totalCells;

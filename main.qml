@@ -28,6 +28,18 @@ ApplicationWindow {
         property alias height: root.height
     }
 
+    Dialog {
+        id: dlg
+        anchors.centerIn: Overlay.overlay
+        modal: true
+        standardButtons: Dialog.Ok
+        property alias text: dlgLabel.text
+        Label {
+            id: dlgLabel
+            anchors.centerIn: parent
+        }
+    }
+
     QtObject {
         id: game
         readonly property string checkSymbol: "✔"
@@ -44,6 +56,10 @@ ApplicationWindow {
             console.info("Current index:", currentIndex);
         }
 
+        readonly property bool gameOver: gameWon || gameLost
+        property bool gameWon
+        property bool gameLost
+
         property var exactMatchingLetters: []
         property var partiallyMatchingLetters: []
         property var usedLetters: []
@@ -54,12 +70,12 @@ ApplicationWindow {
             var otherLetters = []
             for (let i = 0; i < currentIndex; i++) {
                 const cell = gameGridRepeater.itemAt(i);
-                console.info("!!! CHECKING CELL FOR MATCHES:", i);
+                //console.info("!!! CHECKING CELL FOR MATCHES:", i);
                 if (cell.hasExactMatch && !exactMatches.includes(cell.letter)) {
-                    console.info("!!! EXACT:", cell.letter);
+                    //console.info("!!! EXACT:", cell.letter);
                     exactMatches.push(cell.letter);
                 } else if (cell.hasPartialMatch && !partialMatches.includes(cell.letter)) {
-                    console.info("!!! PARTIAL:", cell.letter);
+                    //console.info("!!! PARTIAL:", cell.letter);
                     partialMatches.push(cell.letter);
                 } else if (!otherLetters.includes(cell.letter)) {
                     otherLetters.push(cell.letter);
@@ -76,6 +92,8 @@ ApplicationWindow {
         function newGame() {
             currentIndex = 0;
             currentRow = 0;
+            gameWon = false;
+            gameLost = false;
             exactMatchingLetters.length = 0;
             partiallyMatchingLetters.length = 0;
             usedLetters.length = 0;
@@ -106,13 +124,33 @@ ApplicationWindow {
                 console.info("!!! OK pressed")
                 const cw = currentRowWord();
                 console.info("!!! Checking current row:", currentRow, "; current row's word:", cw)
+
+                if (cw === Wurdl.todaysGameWord) { // game won
+                    currentRow++;
+                    gameWon = true;
+                    dlg.title = qsTr("Game Won!");
+                    dlg.text = qsTr("Congratulations<br><br>" +
+                                    "You won the game in %n turn(s)", "", currentRow);
+                    dlg.open();
+                    return;
+                }
+
                 const wordOk = Wurdl.checkWord(cw);
                 console.info("!!! Current word in dictionary:", wordOk);
                 if (wordOk) {
-                    currentRow++; // TODO check for win or loss on the last row
+                    currentRow++;
+                    if (currentRow >= Wurdl.totalRows) { // game lost
+                        gameLost = true;
+                        dlg.title = qsTr("Game Lost :(");
+                        dlg.text = qsTr("Unfortunately you couldn't make it this time");
+                        dlg.open();
+                        return;
+                    }
                 } else {
                     console.warn("Current word not in the dictionary:", cw);
-                    // TODO display a msg dialog
+                    dlg.title = qsTr("Word Not Found");
+                    dlg.text = qsTr("The word '%1' was not found in dictionary, try again.").arg(cw);
+                    dlg.open();
                 }
             } else if (letter === deleteSymbol) {
                 console.info("!!! Delete pressed")
