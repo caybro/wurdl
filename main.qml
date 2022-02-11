@@ -31,6 +31,17 @@ ApplicationWindow {
                 Menu {
                     y: parent.height
                     id: menu
+                    MenuItem {
+                        icon.source: "qrc:/icons/outline_casino_black_24dp.png"
+                        text: qsTr("Random Game")
+                        enabled: false // TODO
+                    }
+                    MenuItem {
+                        icon.source: "qrc:/icons/outline_history_black_24dp.png"
+                        text: qsTr("Previous Games...")
+                        enabled: false // TODO
+                    }
+                    MenuSeparator {}
                     SwitchDelegate {
                         checkable: true
                         text: qsTr("Dark Mode")
