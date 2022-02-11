@@ -34,7 +34,7 @@ ApplicationWindow {
                     MenuItem {
                         icon.source: "qrc:/icons/outline_casino_black_24dp.png"
                         text: qsTr("Random Game")
-                        onClicked: game.newGame(Wurdl.randomWordIndex())
+                        onClicked: game.newGame()
                     }
                     MenuItem {
                         icon.source: "qrc:/icons/outline_history_black_24dp.png"
@@ -70,13 +70,6 @@ ApplicationWindow {
         }
     }
 
-    Component.onCompleted: {
-        console.info("!!! Today's word index:", game.currentGameIndex)
-        console.info("!!! Today's word:", game.currentGameWord)
-        console.info("!!! Random word:", Wurdl.getWord(Wurdl.randomWordIndex()))
-        console.info("!!! Is today's word in dictionary?", Wurdl.checkWord(game.currentGameWord))
-    }
-
     Settings {
         property alias x: root.x
         property alias y: root.y
@@ -104,8 +97,14 @@ ApplicationWindow {
         readonly property string deleteSymbol: "⌫"
 
         property int currentGameIndex: Wurdl.todaysWordIndex()
+        onCurrentGameIndexChanged: {
+            console.info("!!! New current game index:", currentGameIndex)
+        }
         readonly property string currentGameWord: Wurdl.getWord(currentGameIndex)
-        onCurrentGameWordChanged: console.info("!!! NEW GAME WORD:", currentGameWord)
+        onCurrentGameWordChanged: {
+            console.info("!!! New game word:", currentGameWord)
+            console.info("!!! Is the word in dictionary?", Wurdl.checkWord(currentGameWord))
+        }
 
         property int currentRow: 0
         onCurrentRowChanged: {
