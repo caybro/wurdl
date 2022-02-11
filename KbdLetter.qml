@@ -10,6 +10,10 @@ Button {
     text: modelData
     font.pixelSize: Qt.application.font.pixelSize * 1.4
 
+    readonly property color exactMatchColor: Material.color(Material.Green)
+    readonly property color partialMatchColor: Material.color(Material.Orange)
+    readonly property color noMatchColor: Material.color(Material.Grey)
+
     signal letterPressed(string letter)
 
     // font color
@@ -19,13 +23,14 @@ Button {
     // bg color
     Material.background: {
         if (root.text !== game.checkSymbol && root.text !== game.deleteSymbol) {
-            // TODO highlight if both exact and partial match
-            if (game.exactMatchingLetters.includes(root.text))
-                return Material.color(Material.Green);
+            if (game.exactMatchingLetters.includes(root.text) && game.partiallyMatchingLetters.includes(root.text))
+                return Qt.tint(exactMatchColor, Qt.rgba(partialMatchColor.r, partialMatchColor.g, partialMatchColor.b, 0.4));
+            else if (game.exactMatchingLetters.includes(root.text))
+                return exactMatchColor;
             else if (game.partiallyMatchingLetters.includes(root.text))
-                return Material.color(Material.Orange);
+                return partialMatchColor;
             else if (game.usedLetters.includes(root.text))
-                return Material.color(Material.Grey);
+                return noMatchColor;
         }
     }
 
