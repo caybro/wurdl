@@ -168,7 +168,8 @@ ApplicationWindow {
                     if (currentRow >= Wurdl.totalRows) { // game lost
                         gameLost = true;
                         dlg.title = qsTr("Game Lost :(");
-                        dlg.text = qsTr("Unfortunately you couldn't make it this time");
+                        dlg.text = qsTr("Unfortunately you couldn't make it this time<br>" +
+                                        "The word was: '%1'").arg(Wurdl.todaysGameWord);
                         dlg.open();
                         return;
                     }
