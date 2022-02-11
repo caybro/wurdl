@@ -18,6 +18,9 @@ SOURCES += \
         main.cpp \
         wurdlcontroller.cpp
 
+HEADERS += \
+    wurdlcontroller.h
+
 RESOURCES += qml.qrc
 
 TRANSLATIONS = i18n/base.ts \
@@ -37,11 +40,3 @@ QML_DESIGNER_IMPORT_PATH =
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
-
-HEADERS += \
-    wurdlcontroller.h
-
-DISTFILES += \
-    Cell.qml \
-    KbdLetter.qml \
-    KbdRow.qml

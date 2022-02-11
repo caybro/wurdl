@@ -20,14 +20,34 @@ ApplicationWindow {
     header: ToolBar {
         RowLayout {
             width: parent.width
+            ToolButton {
+                Layout.alignment: Qt.AlignLeft
+                icon.source: "qrc:/icons/outline_menu_black_24dp.png"
+                font.pixelSize: Qt.application.font.pixelSize * 1.5
+                ToolTip.text: qsTr("Menu")
+                ToolTip.visible: hovered
+                onClicked: menu.open()
+
+                Menu {
+                    y: parent.height
+                    id: menu
+                    SwitchDelegate {
+                        checkable: true
+                        text: qsTr("Dark Mode")
+                        checked: root.Material.theme === Material.Dark
+                        onToggled: {
+                            root.Material.theme = checked ? Material.Dark : Material.Light;
+                        }
+                    }
+                }
+            }
             Label {
-                anchors.centerIn: parent
+                Layout.alignment: Qt.AlignCenter
                 horizontalAlignment: Label.AlignHCenter
                 elide: Label.ElideMiddle
                 text: qsTr("Game number %1").arg(Wurdl.todaysWordIndex+1)
                 font.pixelSize: Qt.application.font.pixelSize * 1.5
             }
-
             ToolButton {
                 Layout.alignment: Qt.AlignRight
                 icon.source: "qrc:/icons/outline_restart_alt_black_24dp.png"
