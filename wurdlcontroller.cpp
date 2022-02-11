@@ -44,8 +44,8 @@ void WurdlController::loadWords() {
     return;
 
   while (!file.atEnd()) {
-    const QString line = file.readLine();
-    m_gameWords.push_back(line.trimmed());
+    const QString line = file.readLine().trimmed();
+    m_gameWords.push_back(line);
   }
   qInfo() << "Loaded" << m_gameWords.size() << "game words";
 }
@@ -56,8 +56,8 @@ void WurdlController::loadDict() {
     return;
 
   while (!file.atEnd()) {
-    const QString line = file.readLine();
-    m_dict.push_back(line.trimmed());
+    const QString line = file.readLine().trimmed();
+    m_dict.push_back(line);
   }
   qInfo() << "Dictionary contains" << m_dict.size() << "words";
 }

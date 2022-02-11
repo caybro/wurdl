@@ -107,9 +107,9 @@ ApplicationWindow {
             console.info("Exact matching kbd letters:", exactMatches);
             console.info("Partially matching kbd letters:", partialMatches);
             console.info("Other used kbd letters:", otherLetters);
-            game.exactMatchingLetters = exactMatches;
-            game.partiallyMatchingLetters = partialMatches;
-            game.usedLetters = otherLetters;
+            exactMatchingLetters = exactMatches;
+            partiallyMatchingLetters = partialMatches;
+            usedLetters = otherLetters;
         }
 
         function newGame() {
@@ -120,13 +120,13 @@ ApplicationWindow {
             currentRow = 0;
             gameWon = false;
             gameLost = false;
-            exactMatchingLetters.length = 0;
-            partiallyMatchingLetters.length = 0;
-            usedLetters.length = 0;
+            exactMatchingLetters = [];
+            partiallyMatchingLetters = [];
+            usedLetters.length = [];
         }
 
         function putLetter(index, letter) {
-            gameGridRepeater.itemAt(game.currentIndex).letter = letter;
+            gameGridRepeater.itemAt(currentIndex).letter = letter;
             currentIndex++;
         }
 
