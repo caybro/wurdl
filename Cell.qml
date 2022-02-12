@@ -12,16 +12,17 @@ Rectangle {
     border.width: 2
     border.color: !game.gameOver && Positioner.index === game.currentIndex ? Material.accent
                                                                            : Material.foreground
-    //Behavior on border.color { ColorAnimation {} }
-
     // highlight cell background based on matches against the current game word
-    color: hasExactMatch ? Material.color(Material.Green) : hasPartialMatch ? Material.color(Material.Orange) : Material.backgroundColor
+    color: hasExactMatch ? Material.color(Material.Green) :
+                           hasPartialMatch ? Material.color(Material.Orange)
+                                           : row < game.currentRow ? Material.color(Material.Grey)
+                                                                   : "transparent"
     Behavior on color { ColorAnimation {} }
 
     readonly property int row: Positioner.index / Wurdl.totalColumns
     readonly property int column: Positioner.index % Wurdl.totalColumns
-    readonly property bool hasExactMatch: root.row < game.currentRow && root.letter === game.currentGameWord[root.column]
-    readonly property bool hasPartialMatch: root.row < game.currentRow && game.currentGameWord.includes(root.letter)
+    readonly property bool hasExactMatch: row < game.currentRow && letter === game.currentGameWord[column]
+    readonly property bool hasPartialMatch: row < game.currentRow && game.currentGameWord.includes(letter)
 
     property alias letter: label.text
 
