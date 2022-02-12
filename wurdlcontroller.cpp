@@ -3,8 +3,11 @@
 #include <algorithm>
 
 #include <QDebug>
+#include <QElapsedTimer>
 #include <QFile>
 #include <QRandomGenerator>
+
+//#define _PROFILE
 
 WurdlController::WurdlController(QObject* parent) : QObject{parent} {
   loadWords();
@@ -34,6 +37,10 @@ bool WurdlController::checkWord(const QString& word) const {
 }
 
 void WurdlController::loadWords() {
+#ifdef _PROFILE
+  QElapsedTimer timer;
+  timer.start();
+#endif
   QFile file(":/data/cs_CZ.words5");
   if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     return;
@@ -43,9 +50,16 @@ void WurdlController::loadWords() {
     m_gameWords.push_back(line);
   }
   qInfo() << "Loaded" << m_gameWords.size() << "game words";
+#ifdef _PROFILE
+  qInfo() << "in" << timer.elapsed() / 1000.f << "s";
+#endif
 }
 
 void WurdlController::loadDict() {
+#ifdef _PROFILE
+  QElapsedTimer timer;
+  timer.start();
+#endif
   QFile file(":/data/cs_CZ.dict");
   if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     return;
@@ -54,5 +68,8 @@ void WurdlController::loadDict() {
     const QString line = file.readLine().trimmed();
     m_dict.push_back(line);
   }
-  qInfo() << "Dictionary contains" << m_dict.size() << "words";
+  qInfo() << "Loaded dictionary of" << m_dict.size() << "words";
+#ifdef _PROFILE
+  qInfo() << "in" << timer.elapsed() / 1000.f << "s";
+#endif
 }
