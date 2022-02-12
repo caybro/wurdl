@@ -6,7 +6,7 @@ import org.caybro.wurdl 1.0
 
 Button {
     id: root
-    implicitWidth: 50
+    implicitWidth: 40
     text: modelData
     font.pixelSize: Qt.application.font.pixelSize * 1.4
 
