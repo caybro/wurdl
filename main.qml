@@ -37,7 +37,7 @@ ApplicationWindow {
                     MenuItem {
                         icon.source: "qrc:/icons/outline_history_black_24dp.png"
                         text: qsTr("Previous Games...")
-                        enabled: false // TODO
+                        onClicked: prevGameDlg.open()
                     }
                     MenuSeparator {}
                     SwitchDelegate {
@@ -84,6 +84,35 @@ ApplicationWindow {
             id: dlgLabel
             anchors.centerIn: parent
         }
+    }
+
+    Dialog {
+        id: prevGameDlg
+        anchors.centerIn: Overlay.overlay
+        modal: true
+        standardButtons: Dialog.Ok | Dialog.Cancel
+        title: qsTr("Play Previous Game")
+        ColumnLayout {
+            anchors.fill: parent
+
+            Label {
+                Layout.fillWidth: true
+                text: qsTr("Select from one of the previous games:")
+            }
+            SpinBox {
+                id: gameSelector
+                from: 1
+                to: Wurdl.todaysWordIndex()
+                wrap: true
+            }
+            Label {
+                Layout.fillWidth: true
+                font.pixelSize: Qt.application.font.pixelSize * 0.85
+                opacity: 0.7
+                text: qsTr("(counting started on 2021-02-02)")
+            }
+        }
+        onAccepted: game.newGame(gameSelector.value-1)
     }
 
     // TODO make a first run / help dialog
