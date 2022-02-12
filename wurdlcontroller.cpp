@@ -32,7 +32,7 @@ QString WurdlController::getWord(int index) const {
 bool WurdlController::checkWord(const QString& word) const {
   const auto result =
       std::find(m_dict.cbegin(), m_dict.cend(), word) != m_dict.cend();
-  // qInfo() << "Checking word:" << word << "; result:" << result;
+  qDebug() << "Checking word:" << word << "; result:" << result;
   return result;
 }
 
@@ -49,9 +49,9 @@ void WurdlController::loadWords() {
     const QString line = file.readLine().trimmed();
     m_gameWords.push_back(line);
   }
-  qInfo() << "Loaded" << m_gameWords.size() << "game words";
+  qDebug() << "Loaded" << m_gameWords.size() << "game words";
 #ifdef _PROFILE
-  qInfo() << "in" << timer.elapsed() / 1000.f << "s";
+  qDebug() << "in" << timer.elapsed() / 1000.f << "s";
 #endif
 }
 
@@ -68,8 +68,8 @@ void WurdlController::loadDict() {
     const QString line = file.readLine().trimmed();
     m_dict.push_back(line);
   }
-  qInfo() << "Loaded dictionary of" << m_dict.size() << "words";
+  qDebug() << "Loaded dictionary of" << m_dict.size() << "words";
 #ifdef _PROFILE
-  qInfo() << "in" << timer.elapsed() / 1000.f << "s";
+  qDebug() << "in" << timer.elapsed() / 1000.f << "s";
 #endif
 }

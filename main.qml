@@ -124,23 +124,23 @@ ApplicationWindow {
 
         property int currentGameIndex: Wurdl.todaysWordIndex()
         onCurrentGameIndexChanged: {
-            console.info("!!! New current game index:", currentGameIndex)
+            console.debug("!!! New current game index:", currentGameIndex)
         }
         readonly property string currentGameWord: Wurdl.getWord(currentGameIndex)
         onCurrentGameWordChanged: {
-            console.info("!!! New game word:", currentGameWord)
-            console.info("!!! Is the word in dictionary?", Wurdl.checkWord(currentGameWord))
+            console.debug("!!! New game word:", currentGameWord)
+            console.debug("!!! Is the word in dictionary?", Wurdl.checkWord(currentGameWord))
         }
 
         property int currentRow: 0
         onCurrentRowChanged: {
-            console.info("Current row changed:", currentRow)
+            console.debug("Current row changed:", currentRow)
             Qt.callLater(recalcMatchingLetters);
         }
 
         property int currentIndex: 0
         onCurrentIndexChanged: {
-            console.info("Current index:", currentIndex);
+            console.debug("Current index:", currentIndex);
         }
 
         readonly property bool gameOver: gameWon || gameLost
@@ -157,20 +157,20 @@ ApplicationWindow {
             var otherLetters = []
             for (let i = 0; i < currentIndex; i++) {
                 const cell = gameGridRepeater.itemAt(i);
-                //console.info("!!! CHECKING CELL FOR MATCHES:", i);
+                //console.debug("!!! CHECKING CELL FOR MATCHES:", i);
                 if (cell.hasExactMatch && !exactMatches.includes(cell.letter)) {
-                    //console.info("!!! EXACT:", cell.letter);
+                    //console.debug("!!! EXACT:", cell.letter);
                     exactMatches.push(cell.letter);
                 } else if (cell.hasPartialMatch && !partialMatches.includes(cell.letter)) {
-                    //console.info("!!! PARTIAL:", cell.letter);
+                    //console.debug("!!! PARTIAL:", cell.letter);
                     partialMatches.push(cell.letter);
                 } else if (!otherLetters.includes(cell.letter)) {
                     otherLetters.push(cell.letter);
                 }
             }
-            console.info("Exact matching kbd letters:", exactMatches);
-            console.info("Partially matching kbd letters:", partialMatches);
-            console.info("Other used kbd letters:", otherLetters);
+            console.debug("Exact matching kbd letters:", exactMatches);
+            console.debug("Partially matching kbd letters:", partialMatches);
+            console.debug("Other used kbd letters:", otherLetters);
             exactMatchingLetters = exactMatches;
             partiallyMatchingLetters = partialMatches;
             usedLetters = otherLetters;
@@ -212,9 +212,9 @@ ApplicationWindow {
 
         function keyPressed(letter) {
             if (letter === checkSymbol) {
-                console.info("!!! OK pressed")
+                console.debug("!!! OK pressed")
                 const cw = currentRowWord();
-                console.info("!!! Checking current row:", currentRow, "; current row's word:", cw)
+                console.debug("!!! Checking current row:", currentRow, "; current row's word:", cw)
 
                 if (cw === game.currentGameWord) { // game won
                     currentRow++;
@@ -227,7 +227,7 @@ ApplicationWindow {
                 }
 
                 const wordOk = Wurdl.checkWord(cw);
-                console.info("!!! Current word in dictionary:", wordOk);
+                console.debug("!!! Current word in dictionary:", wordOk);
                 if (wordOk) {
                     currentRow++;
                     if (currentRow >= Wurdl.totalRows) { // game lost
@@ -239,16 +239,16 @@ ApplicationWindow {
                         return;
                     }
                 } else {
-                    console.warn("Current word not in the dictionary:", cw);
+                    console.info("Current word not in the dictionary:", cw);
                     dlg.title = qsTr("Word Not Found");
                     dlg.text = qsTr("The word '%1' was not found in dictionary, try again.").arg(cw);
                     dlg.open();
                 }
             } else if (letter === deleteSymbol) {
-                console.info("!!! Delete pressed")
+                console.debug("!!! Delete pressed")
                 removeLastLetter();
             } else {
-                //console.info("!!! Letter pressed", letter)
+                //console.debug("!!! Letter pressed", letter)
                 putLetter(currentIndex, letter);
             }
         }
