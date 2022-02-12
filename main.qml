@@ -15,15 +15,13 @@ ApplicationWindow {
     visible: true
     title: qsTr("Wurdl")
 
-    //Material.theme: Material.Dark
-
     header: ToolBar {
+        Material.theme: Material.System
         RowLayout {
             width: parent.width
             ToolButton {
                 Layout.alignment: Qt.AlignLeft
                 icon.source: "qrc:/icons/outline_menu_black_24dp.png"
-                font.pixelSize: Qt.application.font.pixelSize * 1.5
                 ToolTip.text: qsTr("Menu")
                 ToolTip.visible: hovered
                 onClicked: menu.open()
@@ -62,7 +60,6 @@ ApplicationWindow {
             ToolButton {
                 Layout.alignment: Qt.AlignRight
                 icon.source: "qrc:/icons/outline_restart_alt_black_24dp.png"
-                font.pixelSize: Qt.application.font.pixelSize * 1.5
                 onClicked: game.newGame(game.currentGameIndex)
                 ToolTip.text: qsTr("Restart Game")
                 ToolTip.visible: hovered
