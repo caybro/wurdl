@@ -23,9 +23,7 @@ Button {
     // bg color
     Material.background: {
         if (root.text !== game.checkSymbol && root.text !== game.deleteSymbol) {
-            if (game.exactMatchingLetters.includes(root.text) && game.partiallyMatchingLetters.includes(root.text))
-                return Qt.tint(exactMatchColor, Qt.rgba(partialMatchColor.r, partialMatchColor.g, partialMatchColor.b, 0.4));
-            else if (game.exactMatchingLetters.includes(root.text))
+            if (game.exactMatchingLetters.includes(root.text))
                 return exactMatchColor;
             else if (game.partiallyMatchingLetters.includes(root.text))
                 return partialMatchColor;
