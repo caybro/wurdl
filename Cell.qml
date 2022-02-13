@@ -21,8 +21,9 @@ Rectangle {
 
     readonly property int row: Positioner.index / Wurdl.totalColumns
     readonly property int column: Positioner.index % Wurdl.totalColumns
-    readonly property bool hasExactMatch: row < game.currentRow && letter === game.currentGameWord[column]
-    readonly property bool hasPartialMatch: row < game.currentRow && letter !== game.currentGameWord[column] && game.currentGameWord.includes(letter)
+
+    property bool hasExactMatch
+    property bool hasPartialMatch
 
     property alias letter: label.text
 

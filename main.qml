@@ -178,7 +178,10 @@ ApplicationWindow {
 
         function newGame(newIndex) {
             for (let i = 0; i < currentIndex; i++) {
-                gameGridRepeater.itemAt(i).letter = "";
+                const cell = gameGridRepeater.itemAt(i);
+                cell.letter = "";
+                cell.hasExactMatch = false;
+                cell.hasPartialMatch = false;
             }
             currentIndex = 0;
             currentRow = 0;
@@ -202,44 +205,61 @@ ApplicationWindow {
 
         function currentRowWord() {
             var result = [];
-            for (let i = 0; i < Wurdl.totalColumns; i++) {
+            for (var i = 0; i < Wurdl.totalColumns; i++) {
                 const cell = gameGridRepeater.itemAt(currentRow * Wurdl.totalColumns + i);
                 result.push(cell.letter);
             }
-
             return result.join('');
+        }
+
+        function highlightCurrentRow() {
+            var secondPass = [...currentGameWord]
+            // first search for exact matches
+            for (var i = 0; i < Wurdl.totalColumns; i++) {
+                const cell = gameGridRepeater.itemAt(currentRow * Wurdl.totalColumns + i);
+                if (cell.letter === currentGameWord[i]) {
+                    cell.hasExactMatch = true;
+                    secondPass[i] = " ";
+                }
+            }
+            // do a second pass searching for partial matches
+            for (var j = 0; j < Wurdl.totalColumns; j++) {
+                const cell = gameGridRepeater.itemAt(currentRow * Wurdl.totalColumns + j);
+                if (!cell.hasExactMatch && secondPass.includes(cell.letter)) {
+                    cell.hasPartialMatch = true;
+                    const idx = secondPass.indexOf(cell.letter);
+                    if (idx !== -1) {
+                        secondPass.splice(idx, 1, " ");
+                    }
+                }
+            }
         }
 
         function keyPressed(letter) {
             if (letter === checkSymbol) {
                 console.debug("!!! OK pressed")
                 const cw = currentRowWord();
-                console.debug("!!! Checking current row:", currentRow, "; current row's word:", cw)
-
-                if (cw === game.currentGameWord) { // game won
-                    currentRow++;
-                    gameWon = true;
-                    dlg.title = qsTr("Game Won!");
-                    dlg.text = qsTr("Congratulations<br><br>" +
-                                    "You won the game in %n turn(s)", "", currentRow);
-                    dlg.open();
-                    return;
-                }
+                console.debug("!!! Gathering current row number:", currentRow, "; current row's word:", cw)
 
                 const wordOk = Wurdl.checkWord(cw);
                 console.debug("!!! Current word in dictionary:", wordOk);
                 if (wordOk) {
+                    highlightCurrentRow();
                     currentRow++;
-                    if (currentRow >= Wurdl.totalRows) { // game lost
+                    if (cw === game.currentGameWord) { // game won
+                        gameWon = true;
+                        dlg.title = qsTr("Game Won!");
+                        dlg.text = qsTr("Congratulations<br><br>" +
+                                        "You won the game in %n turn(s)", "", currentRow);
+                        dlg.open();
+                    } else if (currentRow >= Wurdl.totalRows) { // game lost
                         gameLost = true;
                         dlg.title = qsTr("Game Lost :(");
                         dlg.text = qsTr("Unfortunately you couldn't make it this time<br>" +
                                         "The word was: '%1'").arg(game.currentGameWord);
                         dlg.open();
-                        return;
                     }
                 } else {
-                    console.info("Current word not in the dictionary:", cw);
                     dlg.title = qsTr("Word Not Found");
                     dlg.text = qsTr("The word '%1' was not found in dictionary, try again.").arg(cw);
                     dlg.open();
