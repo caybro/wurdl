@@ -77,19 +77,27 @@ ApplicationWindow {
 
     Dialog {
         id: dlg
-        anchors.centerIn: Overlay.overlay
+        parent: Overlay.overlay
+        x: Math.round((parent.width - width) / 2)
+        y: Math.round((parent.height - height) / 2)
+        width: parent.width * 0.9
         modal: true
         standardButtons: Dialog.Ok
         property alias text: dlgLabel.text
         Label {
             id: dlgLabel
+            width: parent.width
             anchors.centerIn: parent
+            wrapMode: Label.Wrap
         }
     }
 
     Dialog {
         id: prevGameDlg
-        anchors.centerIn: Overlay.overlay
+        parent: Overlay.overlay
+        x: Math.round((parent.width - width) / 2)
+        y: Math.round((parent.height - height) / 2)
+        width: parent.width * 0.9
         modal: true
         standardButtons: Dialog.Ok | Dialog.Cancel
         title: qsTr("Play Previous Game")
