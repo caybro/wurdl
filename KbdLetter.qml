@@ -6,7 +6,7 @@ import org.caybro.wurdl 1.0
 
 Button {
     id: root
-    implicitWidth: 30
+    implicitWidth: text ? 30 : 45
     text: typeof modelData !== 'undefined' ? modelData : ""
     font.pixelSize: Qt.application.font.pixelSize * 1.1
 

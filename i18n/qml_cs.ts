@@ -39,27 +39,27 @@
         <translation>Restartovat hru</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="94"/>
+        <location filename="../main.qml" line="103"/>
         <source>Play Previous Game</source>
-        <translation type="unfinished">Hrát předchozí hru</translation>
+        <translation>Hrát předchozí hru</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="100"/>
+        <location filename="../main.qml" line="108"/>
         <source>Select from one of the previous games:</source>
-        <translation>Zvolte jednu z předchocích her:</translation>
+        <translation>Zvolte jednu z předchozích her:</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="112"/>
+        <location filename="../main.qml" line="120"/>
         <source>(counting started on 2021-02-02)</source>
         <translation>(počítání začalo 2.2. 2021)</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="251"/>
+        <location filename="../main.qml" line="255"/>
         <source>Game Won!</source>
         <translation>Vítězství!</translation>
     </message>
     <message numerus="yes">
-        <location filename="../main.qml" line="252"/>
+        <location filename="../main.qml" line="256"/>
         <source>Congratulations&lt;br&gt;&lt;br&gt;You won the game in %n turn(s)</source>
         <translation>
             <numerusform>Gratulujeme&lt;br&gt;&lt;br&gt;Vyhráli jste hru v %n tahu</numerusform>
@@ -68,12 +68,12 @@
         </translation>
     </message>
     <message>
-        <location filename="../main.qml" line="257"/>
+        <location filename="../main.qml" line="261"/>
         <source>Game Lost :(</source>
         <translation>Prohra :(</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="258"/>
+        <location filename="../main.qml" line="262"/>
         <source>Unfortunately you couldn&apos;t make it this time&lt;br&gt;The word was: &apos;%1&apos;</source>
         <translation>Bohužel to tentokrát nevyšlo&lt;br&gt;Dané slovo bylo: %1</translation>
     </message>
@@ -82,12 +82,12 @@
         <translation type="vanished">Bohužel to tentokrát nevyšlo</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="263"/>
+        <location filename="../main.qml" line="267"/>
         <source>Word Not Found</source>
         <translation>Slovo nenalezeno</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="264"/>
+        <location filename="../main.qml" line="268"/>
         <source>The word &apos;%1&apos; was not found in dictionary, try again.</source>
         <translation>Slovo &apos;%1&apos; nebylo nalezeno ve slovníku, zkuste to znovu.</translation>
     </message>
