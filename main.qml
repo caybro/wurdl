@@ -72,6 +72,7 @@ ApplicationWindow {
         property alias y: root.y
         property alias width: root.width
         property alias height: root.height
+        property alias lastHistoryGame: gameSelector.value
     }
 
     Dialog {
@@ -94,7 +95,6 @@ ApplicationWindow {
         title: qsTr("Play Previous Game")
         ColumnLayout {
             anchors.fill: parent
-
             Label {
                 Layout.fillWidth: true
                 text: qsTr("Select from one of the previous games:")
