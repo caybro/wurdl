@@ -20,7 +20,7 @@ int WurdlController::todaysWordIndex() const {
 }
 
 int WurdlController::randomWordIndex() const {
-  return QRandomGenerator::global()->bounded(0, m_gameWords.size());
+  return QRandomGenerator::global()->bounded(0u, m_gameWords.size());
 }
 
 QString WurdlController::getWord(int index) const {
