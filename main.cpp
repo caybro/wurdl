@@ -1,4 +1,5 @@
 #include <QGuiApplication>
+#include <QIcon>
 #include <QLibraryInfo>
 #include <QLoggingCategory>
 #include <QQmlApplicationEngine>
@@ -17,6 +18,7 @@ int main(int argc, char *argv[])
   app.setApplicationDisplayName(QStringLiteral("Wurdl"));
   app.setOrganizationName(QStringLiteral("caybro"));
   app.setApplicationVersion(QStringLiteral("0.0.1"));
+  app.setWindowIcon(QIcon(QStringLiteral(":/icons/alphabet-w.svg")));
 
 #ifdef QT_DEBUG
   QLoggingCategory::setFilterRules(
