@@ -119,9 +119,6 @@ ApplicationWindow {
 
     QtObject {
         id: game
-        readonly property string checkSymbol: "✔"
-        readonly property string deleteSymbol: "⌫"
-
         property int currentGameIndex: Wurdl.todaysWordIndex()
         onCurrentGameIndexChanged: {
             console.debug("!!! New current game index:", currentGameIndex)
@@ -235,49 +232,51 @@ ApplicationWindow {
             }
         }
 
-        function keyPressed(letter) {
-            if (letter === checkSymbol) {
-                console.debug("!!! OK pressed")
-                const cw = currentRowWord();
-                console.debug("!!! Gathering current row number:", currentRow, "; current row's word:", cw)
+        function checkPressed() {
+            console.debug("!!! OK pressed")
+            const cw = currentRowWord();
+            console.debug("!!! Gathering current row number:", currentRow, "; current row's word:", cw)
 
-                const wordOk = Wurdl.checkWord(cw);
-                console.debug("!!! Current word in dictionary:", wordOk);
-                if (wordOk) {
-                    highlightCurrentRow();
-                    currentRow++;
-                    if (cw === game.currentGameWord) { // game won
-                        gameWon = true;
-                        dlg.title = qsTr("Game Won!");
-                        dlg.text = qsTr("Congratulations<br><br>" +
-                                        "You won the game in %n turn(s)", "", currentRow);
-                        dlg.open();
-                    } else if (currentRow >= Wurdl.totalRows) { // game lost
-                        gameLost = true;
-                        dlg.title = qsTr("Game Lost :(");
-                        dlg.text = qsTr("Unfortunately you couldn't make it this time<br>" +
-                                        "The word was: '%1'").arg(game.currentGameWord);
-                        dlg.open();
-                    }
-                } else {
-                    dlg.title = qsTr("Word Not Found");
-                    dlg.text = qsTr("The word '%1' was not found in dictionary, try again.").arg(cw);
+            const wordOk = Wurdl.checkWord(cw);
+            console.debug("!!! Current word in dictionary:", wordOk);
+            if (wordOk) {
+                highlightCurrentRow();
+                currentRow++;
+                if (cw === game.currentGameWord) { // game won
+                    gameWon = true;
+                    dlg.title = qsTr("Game Won!");
+                    dlg.text = qsTr("Congratulations<br><br>" +
+                                    "You won the game in %n turn(s)", "", currentRow);
+                    dlg.open();
+                } else if (currentRow >= Wurdl.totalRows) { // game lost
+                    gameLost = true;
+                    dlg.title = qsTr("Game Lost :(");
+                    dlg.text = qsTr("Unfortunately you couldn't make it this time<br>" +
+                                    "The word was: '%1'").arg(game.currentGameWord);
                     dlg.open();
                 }
-            } else if (letter === deleteSymbol) {
-                console.debug("!!! Delete pressed")
-                removeLastLetter();
             } else {
-                //console.debug("!!! Letter pressed", letter)
-                putLetter(currentIndex, letter);
+                dlg.title = qsTr("Word Not Found");
+                dlg.text = qsTr("The word '%1' was not found in dictionary, try again.").arg(cw);
+                dlg.open();
             }
+        }
+
+        function deletePressed() {
+            console.debug("!!! Delete pressed")
+            removeLastLetter();
+        }
+
+        function keyPressed(letter) {
+            //console.debug("!!! Letter pressed", letter);
+            putLetter(currentIndex, letter);
         }
     }
 
     ColumnLayout {
         anchors.fill: parent
-        anchors.margins: 12
-        spacing: 8
+        anchors.topMargin: 24
+        anchors.margins: 4
 
         // game grid
         Grid {
@@ -312,8 +311,11 @@ ApplicationWindow {
             onLetterPressed: game.keyPressed(letter)
         }
         KbdRow {
-            model: [game.checkSymbol, "z", "x", "c", "v", "b", "n", "m", game.deleteSymbol]
+            specialButtons: true
+            model: ["z", "x", "c", "v", "b", "n", "m"]
             onLetterPressed: game.keyPressed(letter)
+            onCheckPressed: game.checkPressed()
+            onDeletePressed: game.deletePressed()
         }
     }
 }
