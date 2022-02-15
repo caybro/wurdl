@@ -6,10 +6,16 @@
 #include <QElapsedTimer>
 #include <QFile>
 #include <QRandomGenerator>
+#include <QSettings>
 
 WurdlController::WurdlController(QObject* parent) : QObject{parent} {
   loadWords();
   loadDict();
+  loadScores();
+}
+
+WurdlController::~WurdlController() {
+  saveScores();
 }
 
 int WurdlController::todaysWordIndex() const {
@@ -32,6 +38,18 @@ bool WurdlController::checkWord(const QString& word) const {
       std::find(m_dict.cbegin(), m_dict.cend(), word) != m_dict.cend();
   // qDebug() << "Checking word:" << word << "; result:" << result;
   return result;
+}
+
+int WurdlController::getScore(int gameId) const {
+  try {
+    return m_scores.at(gameId);
+  } catch (const std::out_of_range&) {
+    return -1;
+  }
+}
+
+void WurdlController::setScore(int gameId, int score) {
+  m_scores[gameId] = score;
 }
 
 void WurdlController::loadWords() {
@@ -70,4 +88,25 @@ void WurdlController::loadDict() {
 #ifdef QT_DEBUG
   qDebug() << "in" << timer.elapsed() / 1000.f << "s";
 #endif
+}
+
+void WurdlController::loadScores() {
+  QSettings settings;
+  settings.beginGroup(QStringLiteral("Scores"));
+  const auto keys = settings.childKeys();
+  for (const auto& gameId : keys) {
+    m_scores[gameId.toInt()] = settings.value(gameId).toInt();
+  }
+  settings.endGroup();
+  qDebug() << "Loaded" << m_scores.size() << "score entries";
+}
+
+void WurdlController::saveScores() {
+  QSettings settings;
+  settings.beginGroup(QStringLiteral("Scores"));
+  for (const auto& [gameId, score] : m_scores) {
+    settings.setValue(QString::number(gameId), score);
+  }
+  settings.endGroup();
+  qDebug() << "Saved" << m_scores.size() << "score entries";
 }

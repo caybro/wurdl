@@ -4,6 +4,9 @@
 #include <QObject>
 #include <QmlTypeAndRevisionsRegistration>
 
+#include <map>
+#include <vector>
+
 class WurdlController : public QObject {
   Q_OBJECT
   QML_NAMED_ELEMENT(Wurdl)
@@ -15,12 +18,16 @@ class WurdlController : public QObject {
 
  public:
   explicit WurdlController(QObject* parent = nullptr);
+  ~WurdlController();
 
   Q_INVOKABLE int todaysWordIndex() const;
   Q_INVOKABLE int randomWordIndex() const;
   Q_INVOKABLE QString getWord(int index) const;
 
   Q_INVOKABLE bool checkWord(const QString& word) const;
+
+  Q_INVOKABLE int getScore(int gameId) const;
+  Q_INVOKABLE void setScore(int gameId, int score);
 
  private:
   constexpr int totalRows() const { return 6; }
@@ -30,7 +37,11 @@ class WurdlController : public QObject {
   void loadWords();
   void loadDict();
 
+  void loadScores();
+  void saveScores();
+
   const QDate m_birthDate{2021, 02, 02};
   std::vector<QString> m_gameWords;
   std::vector<QString> m_dict;
+  std::map<int, int> m_scores;
 };

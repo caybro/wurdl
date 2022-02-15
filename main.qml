@@ -110,11 +110,18 @@ ApplicationWindow {
                 Layout.fillWidth: true
                 text: qsTr("Select from one of the previous games:")
             }
-            SpinBox {
-                id: gameSelector
-                from: 1
-                to: Wurdl.todaysWordIndex()
-                wrap: true
+            RowLayout {
+                SpinBox {
+                    id: gameSelector
+                    from: 0
+                    to: Wurdl.todaysWordIndex()-1
+                    wrap: true
+                    value: Wurdl.todaysWordIndex()-1
+                    textFromValue: function(value) { return Number(value)+1; }
+                }
+                Label {
+                    text: qsTr("Previous score: %1").arg(Wurdl.getScore(gameSelector.value))
+                }
             }
             Label {
                 Layout.fillWidth: true
@@ -123,7 +130,7 @@ ApplicationWindow {
                 text: qsTr("(counting started on 2021-02-02)")
             }
         }
-        onAccepted: game.newGame(gameSelector.value-1)
+        onAccepted: game.newGame(gameSelector.value)
     }
 
     GameDialog {
@@ -232,6 +239,8 @@ ApplicationWindow {
         property bool gameWon
         property bool gameLost
 
+        readonly property int currentScore: gameWon ? 7 - currentRow : 0 // 6..1 for wins, 0 for loss, -1 for not played
+
         property var exactMatchingLetters: []
         property var partiallyMatchingLetters: []
         property var usedLetters: []
@@ -298,7 +307,7 @@ ApplicationWindow {
         }
 
         function highlightCurrentRow() {
-            var secondPass = [...currentGameWord]
+            var secondPass = [...currentGameWord];
             // first search for exact matches
             for (var i = 0; i < Wurdl.totalColumns; i++) {
                 const cell = gameGridRepeater.itemAt(currentRow * Wurdl.totalColumns + i);
@@ -334,13 +343,16 @@ ApplicationWindow {
                     gameWon = true;
                     dlg.title = qsTr("Game Won!");
                     dlg.text = qsTr("Congratulations<br><br>" +
-                                    "You won the game in %n turn(s)", "", currentRow);
+                                    "You won the game in %n turn(s).<br><br>" +
+                                    "Your score: %1", "", currentRow).arg(currentScore);
+                    Wurdl.setScore(currentGameIndex, currentScore);
                     dlg.open();
                 } else if (currentRow >= Wurdl.totalRows) { // game lost
                     gameLost = true;
                     dlg.title = qsTr("Game Lost :(");
-                    dlg.text = qsTr("Unfortunately you couldn't make it this time<br>" +
+                    dlg.text = qsTr("Unfortunately you couldn't make it this time.<br>" +
                                     "The word was: '%1'").arg(game.currentGameWord);
+                    Wurdl.setScore(currentGameIndex, currentScore);
                     dlg.open();
                 }
             } else {

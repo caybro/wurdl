@@ -15,7 +15,7 @@
     </message>
     <message>
         <location filename="../main.qml" line="40"/>
-        <location filename="../main.qml" line="131"/>
+        <location filename="../main.qml" line="138"/>
         <source>How to Play</source>
         <translation>Jak hrát hru</translation>
     </message>
@@ -56,64 +56,81 @@
     </message>
     <message>
         <location filename="../main.qml" line="123"/>
+        <source>Previous score: %1</source>
+        <translation>Předchozí skóre: %1</translation>
+    </message>
+    <message>
+        <location filename="../main.qml" line="130"/>
         <source>(counting started on 2021-02-02)</source>
         <translation>(počítání začalo 2.2. 2021)</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="137"/>
+        <location filename="../main.qml" line="144"/>
         <source>Guess the word in 6 tries. After each try, the letter gets colored according to how far your guess was from the original word.</source>
         <translation>Uhodni slovo na 6 pokusů. Po každém pokusu se písmenko obarví barvou podle toho, jak daleko byl tvůj tip od uhodnutí slova.</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="156"/>
+        <location filename="../main.qml" line="163"/>
         <source>Letter &lt;b&gt;K&lt;/b&gt; is contained in the word and placed &lt;b&gt;correctly&lt;/b&gt;.</source>
         <translation>Písmeno &lt;b&gt;K&lt;/b&gt; je ve slově a na &lt;b&gt;správném místě&lt;/b&gt;.</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="177"/>
+        <location filename="../main.qml" line="184"/>
         <source>Letter &lt;b&gt;L&lt;/b&gt; is contained in the word but &lt;b&gt;misplaced&lt;/b&gt;.</source>
         <translation>Písmeno &lt;b&gt;L&lt;/b&gt; je v hledaném slově, ale na &lt;b&gt;chybném místě&lt;/b&gt;.</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="198"/>
+        <location filename="../main.qml" line="205"/>
         <source>Letter &lt;b&gt;R&lt;/b&gt; is &lt;b&gt;not contained&lt;/b&gt; in the word being searched.</source>
         <translation>Písmeno &lt;b&gt;R&lt;/b&gt; se v hledaném slově &lt;b&gt;nevyskytuje&lt;/b&gt;.</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="335"/>
+        <location filename="../main.qml" line="344"/>
         <source>Game Won!</source>
         <translation>Vítězství!</translation>
     </message>
     <message numerus="yes">
-        <location filename="../main.qml" line="336"/>
-        <source>Congratulations&lt;br&gt;&lt;br&gt;You won the game in %n turn(s)</source>
+        <location filename="../main.qml" line="345"/>
+        <source>Congratulations&lt;br&gt;&lt;br&gt;You won the game in %n turn(s).&lt;br&gt;&lt;br&gt;Your score: %1</source>
         <translation>
+            <numerusform>Gratulujeme&lt;br&gt;&lt;br&gt;Vyhráli jste hru v %n tahu. &lt;br&gt;&lt;br&gt;Vaše skóre: %1</numerusform>
+            <numerusform>Gratulujeme&lt;br&gt;&lt;br&gt;Vyhráli jste hru ve %n tazích. &lt;br&gt;&lt;br&gt;Vaše skóre: %1</numerusform>
+            <numerusform>Gratulujeme&lt;br&gt;&lt;br&gt;Vyhráli jste hru v %n tazích. &lt;br&gt;&lt;br&gt;Vaše skóre: %1</numerusform>
+        </translation>
+    </message>
+    <message>
+        <location filename="../main.qml" line="353"/>
+        <source>Unfortunately you couldn&apos;t make it this time.&lt;br&gt;The word was: &apos;%1&apos;</source>
+        <translation>Bohužel to tentokrát nevyšlo.&lt;br&gt;Dané slovo bylo: %1</translation>
+    </message>
+    <message numerus="yes">
+        <source>Congratulations&lt;br&gt;&lt;br&gt;You won the game in %n turn(s)</source>
+        <translation type="vanished">
             <numerusform>Gratulujeme&lt;br&gt;&lt;br&gt;Vyhráli jste hru v %n tahu</numerusform>
             <numerusform>Gratulujeme&lt;br&gt;&lt;br&gt;Vyhráli jste hru ve %n tazích</numerusform>
             <numerusform>Gratulujeme&lt;br&gt;&lt;br&gt;Vyhráli jste hru v %n tazích</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../main.qml" line="341"/>
+        <location filename="../main.qml" line="352"/>
         <source>Game Lost :(</source>
         <translation>Prohra :(</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="342"/>
         <source>Unfortunately you couldn&apos;t make it this time&lt;br&gt;The word was: &apos;%1&apos;</source>
-        <translation>Bohužel to tentokrát nevyšlo&lt;br&gt;Dané slovo bylo: %1</translation>
+        <translation type="vanished">Bohužel to tentokrát nevyšlo&lt;br&gt;Dané slovo bylo: %1</translation>
     </message>
     <message>
         <source>Unfortunately you couldn&apos;t make it this time</source>
         <translation type="vanished">Bohužel to tentokrát nevyšlo</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="347"/>
+        <location filename="../main.qml" line="359"/>
         <source>Word Not Found</source>
         <translation>Slovo nenalezeno</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="348"/>
+        <location filename="../main.qml" line="360"/>
         <source>The word &apos;%1&apos; was not found in dictionary, try again.</source>
         <translation>Slovo &apos;%1&apos; nebylo nalezeno ve slovníku, zkuste to znovu.</translation>
     </message>
