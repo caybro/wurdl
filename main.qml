@@ -15,6 +15,12 @@ ApplicationWindow {
     visible: true
     title: qsTr("Wurdl")
 
+    Component.onCompleted: {
+        if (settings.firstRun) {
+            helpDialog.open();
+        }
+    }
+
     header: ToolBar {
         Material.theme: Material.System
         RowLayout {
@@ -29,6 +35,11 @@ ApplicationWindow {
                 Menu {
                     y: parent.height
                     id: menu
+                    MenuItem {
+                        icon.source: "qrc:/icons/outline_help_outline_black_24dp.png"
+                        text: qsTr("How to Play")
+                        onClicked: helpDialog.open()
+                    }
                     MenuItem {
                         icon.source: "qrc:/icons/outline_casino_black_24dp.png"
                         text: qsTr("Random Game")
@@ -69,11 +80,13 @@ ApplicationWindow {
     }
 
     Settings {
+        id: settings
         property alias x: root.x
         property alias y: root.y
         property alias width: root.width
         property alias height: root.height
         property alias lastHistoryGame: gameSelector.value
+        property bool firstRun: true
     }
 
     Dialog {
@@ -124,7 +137,86 @@ ApplicationWindow {
         onAccepted: game.newGame(gameSelector.value-1)
     }
 
-    // TODO make a first run / help dialog
+    Dialog {
+        id: helpDialog
+        parent: Overlay.overlay
+        x: Math.round((parent.width - width) / 2)
+        y: Math.round((parent.height - height) / 2)
+        width: parent.width * 0.9
+        modal: true
+        standardButtons: Dialog.Ok
+        title: qsTr("How to Play")
+        ColumnLayout {
+            anchors.fill: parent
+            Label {
+                Layout.fillWidth: true
+                wrapMode: Label.Wrap
+                text: qsTr("Guess the word in 6 tries. After each try, the letter gets colored according to " +
+                           "how far your guess was from the original word.")
+            }
+            Row {
+                Layout.topMargin: 12
+                spacing: 6
+                Cell {
+                    letter: "k"
+                    border.color: Material.foreground
+                    hasExactMatch: true
+                }
+                Cell { letter: "o"; color: "transparent" }
+                Cell { letter: "č"; color: "transparent" }
+                Cell { letter: "k"; color: "transparent" }
+                Cell { letter: "a"; color: "transparent" }
+            }
+            Label {
+                Layout.fillWidth: true
+                wrapMode: Label.Wrap
+                text: qsTr("Letter <b>K</b> is contained in the word and placed <b>correctly</b>.")
+            }
+            Row {
+                Layout.topMargin: 12
+                spacing: 6
+                Cell {
+                    letter: "p"
+                    border.color: Material.foreground
+                    color: "transparent"
+                }
+                Cell { letter: "i"; color: "transparent" }
+                Cell {
+                    letter: "l"
+                    hasPartialMatch: true
+                }
+                Cell { letter: "o"; color: "transparent" }
+                Cell { letter: "t"; color: "transparent" }
+            }
+            Label {
+                Layout.fillWidth: true
+                wrapMode: Label.Wrap
+                text: qsTr("Letter <b>L</b> is contained in the word but <b>misplaced</b>.")
+            }
+            Row {
+                Layout.topMargin: 12
+                spacing: 6
+                Cell {
+                    letter: "m"
+                    border.color: Material.foreground
+                    color: "transparent"
+                }
+                Cell { letter: "e"; color: "transparent" }
+                Cell { letter: "t"; color: "transparent" }
+                Cell {
+                    letter: "r"
+                    color: Material.color(Material.Grey)
+                }
+                Cell { letter: "o"; color: "transparent" }
+            }
+            Label {
+                Layout.fillWidth: true
+                wrapMode: Label.Wrap
+                text: qsTr("Letter <b>R</b> is <b>not contained</b> in the word being searched.")
+            }
+        }
+        onClosed: settings.firstRun = false;
+    }
 
     QtObject {
         id: game
