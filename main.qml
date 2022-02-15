@@ -205,7 +205,7 @@ ApplicationWindow {
                 Cell { letter: "t"; color: "transparent" }
                 Cell {
                     letter: "r"
-                    color: Material.color(Material.Grey)
+                    color: game.noMatchColor
                 }
                 Cell { letter: "o"; color: "transparent" }
             }
@@ -220,6 +220,10 @@ ApplicationWindow {
 
     QtObject {
         id: game
+        readonly property color exactMatchColor: Material.color(Material.Green)
+        readonly property color partialMatchColor: Material.color(Material.Orange)
+        readonly property color noMatchColor: Material.color(Material.Grey)
+
         property int currentGameIndex: Wurdl.todaysWordIndex()
         onCurrentGameIndexChanged: {
             console.debug("!!! New current game index:", currentGameIndex)

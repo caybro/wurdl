@@ -6,16 +6,16 @@ import org.caybro.wurdl 1.0
 
 Rectangle {
     id: root
-    width: 55
+    width: 60
     height: 60
     radius: 6
     border.width: 2
     border.color: !game.gameOver && Positioner.index === game.currentIndex ? Material.accent
                                                                            : Material.foreground
     // highlight cell background based on matches against the current game word
-    color: hasExactMatch ? Material.color(Material.Green) :
-                           hasPartialMatch ? Material.color(Material.Orange)
-                                           : row < game.currentRow ? Material.color(Material.Grey)
+    color: hasExactMatch ? game.exactMatchColor :
+                           hasPartialMatch ? game.partialMatchColor
+                                           : row < game.currentRow ? game.noMatchColor
                                                                    : "transparent"
     Behavior on color { ColorAnimation {} }
 

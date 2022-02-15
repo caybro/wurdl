@@ -10,21 +10,17 @@ Button {
     text: typeof modelData !== 'undefined' ? modelData : ""
     font.pixelSize: Qt.application.font.pixelSize * 1.1
 
-    readonly property color exactMatchColor: Material.color(Material.Green)
-    readonly property color partialMatchColor: Material.color(Material.Orange)
-    readonly property color noMatchColor: Material.color(Material.Grey)
-
     signal letterPressed(string letter)
 
     // bg color
     Material.background: {
         if (text) {
             if (game.exactMatchingLetters.includes(root.text))
-                return exactMatchColor;
+                return game.exactMatchColor;
             else if (game.partiallyMatchingLetters.includes(root.text))
-                return partialMatchColor;
+                return game.partialMatchColor;
             else if (game.usedLetters.includes(root.text))
-                return noMatchColor;
+                return game.noMatchColor;
         }
     }
 
