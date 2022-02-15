@@ -14,18 +14,11 @@ Button {
     readonly property color partialMatchColor: Material.color(Material.Orange)
     readonly property color noMatchColor: Material.color(Material.Grey)
 
-    property bool checkButton
-    property bool deleteButton
-
     signal letterPressed(string letter)
-
-    // font color
-    Material.foreground: checkButton ? Material.color(Material.Green)
-                                     : deleteButton ? Material.color(Material.Red) : undefined
 
     // bg color
     Material.background: {
-        if (!checkButton && !deleteButton) {
+        if (text) {
             if (game.exactMatchingLetters.includes(root.text))
                 return exactMatchColor;
             else if (game.partiallyMatchingLetters.includes(root.text))
@@ -38,10 +31,6 @@ Button {
     enabled: {
         if (game.gameOver) {
             return false;
-        } else if (checkButton) {
-            return game.currentIndex > game.currentRow * Wurdl.totalColumns && game.currentIndex % Wurdl.totalColumns === 0 && game.currentIndex <= Wurdl.totalCells;
-        } else if (deleteButton) {
-            return game.currentIndex > game.currentRow * Wurdl.totalColumns && game.currentIndex <= Wurdl.totalCells;
         }
 
         // enable letters only when the last line got accepted (thus incrementing the currentRow)
