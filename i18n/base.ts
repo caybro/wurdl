@@ -34,54 +34,54 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.qml" line="64"/>
+        <location filename="../main.qml" line="65"/>
         <source>Restart Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.qml" line="103"/>
+        <location filename="../main.qml" line="104"/>
         <source>Play Previous Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.qml" line="108"/>
+        <location filename="../main.qml" line="109"/>
         <source>Select from one of the previous games:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.qml" line="120"/>
+        <location filename="../main.qml" line="121"/>
         <source>(counting started on 2021-02-02)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.qml" line="255"/>
+        <location filename="../main.qml" line="256"/>
         <source>Game Won!</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../main.qml" line="256"/>
+        <location filename="../main.qml" line="257"/>
         <source>Congratulations&lt;br&gt;&lt;br&gt;You won the game in %n turn(s)</source>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../main.qml" line="261"/>
+        <location filename="../main.qml" line="262"/>
         <source>Game Lost :(</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.qml" line="262"/>
+        <location filename="../main.qml" line="263"/>
         <source>Unfortunately you couldn&apos;t make it this time&lt;br&gt;The word was: &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.qml" line="267"/>
+        <location filename="../main.qml" line="268"/>
         <source>Word Not Found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.qml" line="268"/>
+        <location filename="../main.qml" line="269"/>
         <source>The word &apos;%1&apos; was not found in dictionary, try again.</source>
         <translation type="unfinished"></translation>
     </message>

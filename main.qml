@@ -326,5 +326,14 @@ ApplicationWindow {
             onCheckPressed: game.checkPressed()
             onDeletePressed: game.deletePressed()
         }
+
+        Label {
+            Layout.fillWidth: true
+            Layout.alignment: Qt.AlignHCenter
+            horizontalAlignment: Label.AlignHCenter
+            font.pixelSize: Qt.application.font.pixelSize * 0.85
+            opacity: 0.7
+            text: "(c) 2022 caybro; version %1".arg(Qt.application.version)
+        }
     }
 }

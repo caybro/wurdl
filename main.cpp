@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
   QGuiApplication app(argc, argv);
   app.setApplicationDisplayName(QStringLiteral("Wurdl"));
   app.setOrganizationName(QStringLiteral("caybro"));
-  app.setApplicationVersion(QStringLiteral("0.0.1"));
+  app.setApplicationVersion(VERSION_NUMBER);
   app.setWindowIcon(QIcon(QStringLiteral(":/icons/alphabet-w.svg")));
 
 #ifdef QT_DEBUG
@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
     qputenv("QT_QUICK_CONTROLS_HOVER_ENABLED", QByteArrayLiteral("1"));
   }
 
-  QQuickStyle::setStyle("Material");
+  QQuickStyle::setStyle(QStringLiteral("Material"));
 
   QTranslator qtTranslator;
   qtTranslator.load(QLocale::system(), QStringLiteral("qt_"), QString(),
