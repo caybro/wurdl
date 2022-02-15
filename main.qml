@@ -60,6 +60,7 @@ ApplicationWindow {
             ToolButton {
                 Layout.alignment: Qt.AlignRight
                 icon.source: "qrc:/icons/outline_restart_alt_black_24dp.png"
+                enabled: game.currentGameIndex !== Wurdl.todaysWordIndex()
                 onClicked: game.newGame(game.currentGameIndex)
                 ToolTip.text: qsTr("Restart Game")
                 ToolTip.visible: hovered
