@@ -89,14 +89,8 @@ ApplicationWindow {
         property bool firstRun: true
     }
 
-    Dialog {
+    GameDialog {
         id: dlg
-        parent: Overlay.overlay
-        x: Math.round((parent.width - width) / 2)
-        y: Math.round((parent.height - height) / 2)
-        width: parent.width * 0.9
-        modal: true
-        standardButtons: Dialog.Ok
         property alias text: dlgLabel.text
         Label {
             id: dlgLabel
@@ -106,13 +100,8 @@ ApplicationWindow {
         }
     }
 
-    Dialog {
+    GameDialog {
         id: prevGameDlg
-        parent: Overlay.overlay
-        x: Math.round((parent.width - width) / 2)
-        y: Math.round((parent.height - height) / 2)
-        width: parent.width * 0.9
-        modal: true
         standardButtons: Dialog.Ok | Dialog.Cancel
         title: qsTr("Play Previous Game")
         ColumnLayout {
@@ -137,14 +126,8 @@ ApplicationWindow {
         onAccepted: game.newGame(gameSelector.value-1)
     }
 
-    Dialog {
+    GameDialog {
         id: helpDialog
-        parent: Overlay.overlay
-        x: Math.round((parent.width - width) / 2)
-        y: Math.round((parent.height - height) / 2)
-        width: parent.width * 0.9
-        modal: true
-        standardButtons: Dialog.Ok
         title: qsTr("How to Play")
         ColumnLayout {
             anchors.fill: parent

@@ -21,5 +21,6 @@
         <file>icons/alphabet-w.svg</file>
         <file>icons/outline_help_outline_black_24dp.png</file>
         <file>icons/outline_help_outline_black_24dp@2x.png</file>
+        <file>GameDialog.qml</file>
     </qresource>
 </RCC>
