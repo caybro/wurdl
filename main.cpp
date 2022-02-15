@@ -25,11 +25,12 @@ int main(int argc, char *argv[])
       QStringLiteral("*.debug=true\nqt.*.debug=false"));
 #endif
 
+  QQuickStyle::setStyle(QStringLiteral("Material"));
+
   if (QTouchDevice::devices().isEmpty()) {
     qputenv("QT_QUICK_CONTROLS_HOVER_ENABLED", QByteArrayLiteral("1"));
+    qputenv("QT_QUICK_CONTROLS_MATERIAL_VARIANT", QByteArrayLiteral("Dense"));
   }
-
-  QQuickStyle::setStyle(QStringLiteral("Material"));
 
   QTranslator qtTranslator;
   qtTranslator.load(QLocale::system(), QStringLiteral("qt_"), QString(),
