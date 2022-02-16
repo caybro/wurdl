@@ -50,6 +50,7 @@ int WurdlController::getScore(int gameId) const {
 
 void WurdlController::setScore(int gameId, int score) {
   m_scores[gameId] = score;
+  saveScores();
 }
 
 void WurdlController::loadWords() {
