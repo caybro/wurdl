@@ -9,6 +9,7 @@ Button {
     implicitWidth: text ? 30 : 50
     text: typeof modelData !== 'undefined' ? modelData : ""
     font.pixelSize: Qt.application.font.pixelSize * 1.1
+    font.capitalization: Font.AllUppercase
 
     signal letterPressed(string letter)
 
