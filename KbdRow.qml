@@ -4,7 +4,7 @@ import QtQuick.Controls.Material 2.15
 
 import org.caybro.wurdl 1.0
 
-Row {
+RowLayout {
     Layout.alignment: Qt.AlignHCenter
     id: root
     spacing: 5
@@ -21,13 +21,16 @@ Row {
         sourceComponent: KbdLetter {
             Material.foreground: Material.color(Material.Green)
             icon.source: "qrc:/icons/outline_done_black_24dp.png"
-            enabled: game.currentIndex > game.currentRow * Wurdl.totalColumns && game.currentIndex % Wurdl.totalColumns === 0 && game.currentIndex <= Wurdl.totalCells
+            enabled: game.currentIndex > game.currentRow * Wurdl.totalColumns
+                     && game.currentIndex % Wurdl.totalColumns === 0
+                     && game.currentIndex <= Wurdl.totalCells
             onClicked: root.checkPressed()
         }
     }
     Repeater {
         id: repeater
         KbdLetter {
+            Layout.fillWidth: true
             onLetterPressed: root.letterPressed(letter)
         }
     }
@@ -36,7 +39,8 @@ Row {
         sourceComponent: KbdLetter {
             Material.foreground: Material.color(Material.Red)
             icon.source: "qrc:/icons/outline_backspace_black_24dp.png"
-            enabled: game.currentIndex > game.currentRow * Wurdl.totalColumns && game.currentIndex <= Wurdl.totalCells
+            enabled: game.currentIndex > game.currentRow * Wurdl.totalColumns
+                     && game.currentIndex <= Wurdl.totalCells
             onClicked: root.deletePressed()
         }
     }

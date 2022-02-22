@@ -375,7 +375,7 @@ ApplicationWindow {
     ColumnLayout {
         anchors.fill: parent
         anchors.topMargin: 24
-        anchors.margins: 4
+        anchors.margins: 6
 
         // game grid
         Grid {
