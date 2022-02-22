@@ -18,7 +18,7 @@ class WurdlController : public QObject {
 
  public:
   explicit WurdlController(QObject* parent = nullptr);
-  ~WurdlController();
+  ~WurdlController() override;
 
   Q_INVOKABLE int todaysWordIndex() const;
   Q_INVOKABLE int randomWordIndex() const;

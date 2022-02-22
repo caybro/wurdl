@@ -306,7 +306,7 @@ ApplicationWindow {
         }
 
         function highlightCurrentRow() {
-            var secondPass = [...currentGameWord];
+            var secondPass = [...currentGameWord]; // string -> array of chars
             // first search for exact matches
             for (var i = 0; i < Wurdl.totalColumns; i++) {
                 const cell = gameGridRepeater.itemAt(currentRow * Wurdl.totalColumns + i);
