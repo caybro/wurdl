@@ -269,7 +269,7 @@ ApplicationWindow {
             usedLetters = otherLetters;
         }
 
-        function newGame(newIndex) {
+        function newGame(newIndex = Wurdl.randomWordIndex()) {
             for (let i = 0; i < currentIndex; i++) {
                 const cell = gameGridRepeater.itemAt(i);
                 cell.letter = "";
@@ -283,7 +283,7 @@ ApplicationWindow {
             exactMatchingLetters = [];
             partiallyMatchingLetters = [];
             usedLetters.length = [];
-            currentGameIndex = newIndex ?? Wurdl.randomWordIndex()
+            currentGameIndex = newIndex;
         }
 
         function putLetter(index, letter) {
