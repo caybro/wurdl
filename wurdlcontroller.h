@@ -3,6 +3,7 @@
 #include <QDate>
 #include <QObject>
 #include <QmlTypeAndRevisionsRegistration>
+#include <QJsonObject>
 
 #include <map>
 #include <vector>
@@ -28,6 +29,8 @@ class WurdlController : public QObject {
 
   Q_INVOKABLE int getScore(int gameId) const;
   Q_INVOKABLE void setScore(int gameId, int score);
+  Q_INVOKABLE QJsonObject getScores() const;
+  Q_INVOKABLE void shareCurrentGame(const QString& boardTweet);
 
  private:
   constexpr int totalRows() const { return 6; }

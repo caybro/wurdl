@@ -247,7 +247,7 @@ ApplicationWindow {
         function recalcMatchingLetters() {
             var exactMatches = [];
             var partialMatches = [];
-            var otherLetters = []
+            var otherLetters = [];
             for (let i = 0; i < currentIndex; i++) {
                 const cell = gameGridRepeater.itemAt(i);
                 //console.debug("!!! CHECKING CELL FOR MATCHES:", i);
@@ -269,7 +269,7 @@ ApplicationWindow {
             usedLetters = otherLetters;
         }
 
-        function newGame(newIndex = Wurdl.randomWordIndex()) {
+        function newGame(newIndex) {
             for (let i = 0; i < currentIndex; i++) {
                 const cell = gameGridRepeater.itemAt(i);
                 cell.letter = "";
@@ -283,7 +283,7 @@ ApplicationWindow {
             exactMatchingLetters = [];
             partiallyMatchingLetters = [];
             usedLetters.length = [];
-            currentGameIndex = newIndex;
+            currentGameIndex = newIndex ?? Wurdl.randomWordIndex();
         }
 
         function putLetter(index, letter) {
@@ -328,10 +328,27 @@ ApplicationWindow {
             }
         }
 
+        function createTweet() {
+            var text = "Wurdl %1 %2/6\n".arg(currentGameIndex+1).arg(currentRow);
+            for (let i = 0; i < currentIndex; i++) {
+                const cell = gameGridRepeater.itemAt(i);
+                if (i % Wurdl.totalColumns === 0)
+                    text += "\n";
+                if (cell.hasExactMatch)
+                    text += "🟩";
+                else if (cell.hasPartialMatch)
+                    text += "🟧";
+                else
+                    text += "⬜";
+            }
+            //console.debug("!!! Tweet:", text);
+            return text;
+        }
+
         function checkPressed() {
-            console.debug("!!! OK pressed")
+            console.debug("!!! OK pressed");
             const cw = currentRowWord();
-            console.debug("!!! Gathering current row number:", currentRow, "; current row's word:", cw)
+            console.debug("!!! Gathering current row number:", currentRow, "; current row's word:", cw);
 
             const wordOk = Wurdl.checkWord(cw);
             console.debug("!!! Current word in dictionary:", wordOk);
@@ -340,11 +357,14 @@ ApplicationWindow {
                 currentRow++;
                 if (cw === game.currentGameWord) { // game won
                     gameWon = true;
+                    // TODO make "win" dialog with Share button
+                    const tweet = createTweet();
                     dlg.title = qsTr("Game Won!");
                     dlg.text = qsTr("Congratulations<br><br>" +
                                     "You won the game in %n turn(s).<br><br>" +
-                                    "Your score: %1", "", currentRow).arg(currentScore);
+                                    "Your score: %1<br><br>Your stats have been copied to cliboard.", "", currentRow).arg(currentScore);
                     Wurdl.setScore(currentGameIndex, currentScore);
+                    Wurdl.shareCurrentGame(tweet);
                     dlg.open();
                 } else if (currentRow >= Wurdl.totalRows) { // game lost
                     gameLost = true;
@@ -362,7 +382,7 @@ ApplicationWindow {
         }
 
         function deletePressed() {
-            console.debug("!!! Delete pressed")
+            console.debug("!!! Delete pressed");
             removeLastLetter();
         }
 

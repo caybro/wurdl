@@ -2,9 +2,11 @@
 
 #include <algorithm>
 
+#include <QClipboard>
 #include <QDebug>
 #include <QElapsedTimer>
 #include <QFile>
+#include <QGuiApplication>
 #include <QRandomGenerator>
 #include <QSettings>
 
@@ -51,6 +53,23 @@ int WurdlController::getScore(int gameId) const {
 void WurdlController::setScore(int gameId, int score) {
   m_scores[gameId] = score;
   saveScores();
+}
+
+QJsonObject WurdlController::getScores() const
+{
+  QJsonObject result;
+  for (const auto& [gameId, score] : m_scores) {
+    if (score != -1) { // skip empty scores
+      result.insert(QString::number(gameId), score);
+    }
+  }
+  return result;
+}
+
+void WurdlController::shareCurrentGame(const QString &boardTweet)
+{
+  QClipboard *clipboard = QGuiApplication::clipboard();
+  clipboard->setText(boardTweet);
 }
 
 void WurdlController::loadWords() {
