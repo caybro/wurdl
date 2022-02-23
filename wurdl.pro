@@ -17,7 +17,6 @@ QML_IMPORT_MAJOR_VERSION = 1
 
 VERSION = 1.1
 DEFINES += VERSION_NUMBER=\\\"$${VERSION}\\\"
-ANDROID_VERSION_NAME = $${VERSION}
 
 SOURCES += \
         main.cpp \
@@ -40,6 +39,9 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 # Android specific
 android {
+    ANDROID_VERSION_NAME = $${VERSION}
+    ANDROID_VERSION_CODE = 11
+
     ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 
     DISTFILES += \
