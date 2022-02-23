@@ -31,6 +31,7 @@ class WurdlController : public QObject {
   Q_INVOKABLE void setScore(int gameId, int score);
   Q_INVOKABLE QJsonObject getScores() const;
   Q_INVOKABLE void shareCurrentGame(const QString& boardTweet);
+  Q_INVOKABLE QJsonObject getScoreStats() const;
 
  private:
   constexpr int totalRows() const { return 6; }

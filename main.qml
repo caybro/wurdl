@@ -19,6 +19,11 @@ ApplicationWindow {
         if (settings.firstRun) {
             helpDialog.open();
         }
+
+        const scores = Wurdl.getScoreStats();
+        for (const property in scores) {
+          console.log(`${property}: ${scores[property]}`);
+        }
     }
 
     header: ToolBar {
@@ -26,7 +31,6 @@ ApplicationWindow {
         RowLayout {
             width: parent.width
             ToolButton {
-                id: menuButton
                 Layout.alignment: Qt.AlignLeft
                 icon.source: "qrc:/icons/outline_menu_black_24dp.png"
                 ToolTip.text: qsTr("Menu")
@@ -69,9 +73,11 @@ ApplicationWindow {
                 text: qsTr("Game number %1").arg(game.currentGameIndex+1)
                 font.pixelSize: Qt.application.font.pixelSize * 1.5
             }
-            Item {
+            ToolButton {
                 Layout.alignment: Qt.AlignRight
-                Layout.preferredWidth: menuButton.width
+                icon.source: "qrc:/icons/outline_leaderboard_black_24dp.png"
+                ToolTip.text: qsTr("Scores")
+                ToolTip.visible: hovered
             }
         }
     }

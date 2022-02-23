@@ -72,6 +72,24 @@ void WurdlController::shareCurrentGame(const QString &boardTweet)
   clipboard->setText(boardTweet);
 }
 
+QJsonObject WurdlController::getScoreStats() const
+{
+  // 6..1 for wins, 0 for loss, -1 for not played
+  QJsonObject result;
+  const auto countOfScores = [&](int score) -> int {
+      return std::count_if(m_scores.cbegin(), m_scores.cend(), [score](const auto& scoreEntry) {
+          return scoreEntry.second == score;
+      });
+  };
+  std::array scoreBuckets = {6, 5, 4, 3, 2, 1, 0};
+  for (auto bucket: scoreBuckets) {
+      result.insert(QString::number(bucket), countOfScores(bucket));
+  }
+  result.insert(QStringLiteral("total"), static_cast<qint64>(m_scores.size()));
+
+  return result;
+}
+
 void WurdlController::loadWords() {
 #ifdef QT_DEBUG
   QElapsedTimer timer;
