@@ -19,11 +19,6 @@ ApplicationWindow {
         if (settings.firstRun) {
             helpDialog.open();
         }
-
-        const scores = Wurdl.getScoreStats();
-        for (const property in scores) {
-          console.log(`${property}: ${scores[property]}`);
-        }
     }
 
     header: ToolBar {
@@ -78,6 +73,7 @@ ApplicationWindow {
                 icon.source: "qrc:/icons/outline_leaderboard_black_24dp.png"
                 ToolTip.text: qsTr("Scores")
                 ToolTip.visible: hovered
+                onClicked: statsDlg.open()
             }
         }
     }
@@ -101,6 +97,35 @@ ApplicationWindow {
             anchors.centerIn: parent
             wrapMode: Label.Wrap
         }
+    }
+
+    GameDialog {
+        id: statsDlg
+        title: qsTr("Score Statistics")
+
+        property var stats: Wurdl.getScoreStats()
+
+        ColumnLayout {
+            Label {
+                text: qsTr("Games played: %1").arg(statsDlg.stats["total"])
+            }
+            Label {
+                text: qsTr("Won: %L1%").arg(statsDlg.stats["won_percent"])
+            }
+            Label {
+                text: qsTr("Total score: %1").arg(statsDlg.stats["total_score"])
+            }
+            Label {
+                text: "<br><b>6 pts.</b>: %1<br>".arg(statsDlg.stats["6"]) +
+                      "<b>5 pts.</b>: %1<br>".arg(statsDlg.stats["5"]) +
+                      "<b>4 pts.</b>: %1<br>".arg(statsDlg.stats["4"]) +
+                      "<b>3 pts.</b>: %1<br>".arg(statsDlg.stats["3"]) +
+                      "<b>2 pts.</b>: %1<br>".arg(statsDlg.stats["2"]) +
+                      "<b>1 pt.</b>: %1<br>".arg(statsDlg.stats["1"]) +
+                      "<b>0 pts.</b>: %1<br>".arg(statsDlg.stats["0"])
+            }
+        }
+        onAboutToShow: stats = Wurdl.getScoreStats()
     }
 
     GameDialog {

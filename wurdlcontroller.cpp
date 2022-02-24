@@ -1,6 +1,8 @@
 #include "wurdlcontroller.h"
 
 #include <algorithm>
+#include <numeric>
+#include <cmath>
 
 #include <QClipboard>
 #include <QDebug>
@@ -86,6 +88,17 @@ QJsonObject WurdlController::getScoreStats() const
       result.insert(QString::number(bucket), countOfScores(bucket));
   }
   result.insert(QStringLiteral("total"), static_cast<qint64>(m_scores.size()));
+
+  const auto countOfWon = [&]() -> int {
+      return std::count_if(m_scores.cbegin(), m_scores.cend(), [](const auto &scoreEntry) {
+          return scoreEntry.second > 0;
+      });
+  };
+  result.insert(QStringLiteral("won_percent"), std::round(countOfWon()/(double)m_scores.size()*100));
+
+  const auto totalScore = std::accumulate(m_scores.cbegin(), m_scores.cend(), 0,
+                                          [](int acc, const auto& scoreEntry) { return (acc + scoreEntry.second); });
+  result.insert(QStringLiteral("total_score"), totalScore);
 
   return result;
 }
