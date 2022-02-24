@@ -81,7 +81,7 @@ QJsonObject WurdlController::getScoreStats() const
           return scoreEntry.second == score;
       });
   };
-  std::array scoreBuckets = {6, 5, 4, 3, 2, 1, 0};
+  const std::array scoreBuckets = {6, 5, 4, 3, 2, 1, 0};
   for (auto bucket: scoreBuckets) {
       result.insert(QString::number(bucket), countOfScores(bucket));
   }

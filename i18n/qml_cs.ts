@@ -40,6 +40,11 @@
         <translation>Hra číslo %1</translation>
     </message>
     <message>
+        <location filename="../main.qml" line="128"/>
+        <source>Score: %1</source>
+        <translation>Skóre: %1</translation>
+    </message>
+    <message>
         <source>Restart Game</source>
         <translation type="vanished">Restartovat hru</translation>
     </message>
@@ -59,9 +64,8 @@
         <translation>Zvolte jednu z předchozích her:</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="128"/>
         <source>Previous score: %1</source>
-        <translation>Předchozí skóre: %1</translation>
+        <translation type="vanished">Předchozí skóre: %1</translation>
     </message>
     <message>
         <location filename="../main.qml" line="135"/>

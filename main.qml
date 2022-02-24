@@ -125,7 +125,7 @@ ApplicationWindow {
                     onValueChanged: prevGameDlg.standardButton(Dialog.Ok).enabled = Wurdl.getScore(value) === -1;
                 }
                 Label {
-                    text: qsTr("Previous score: %1").arg(Wurdl.getScore(gameSelector.value))
+                    text: qsTr("Score: %1").arg(Wurdl.getScore(gameSelector.value))
                 }
             }
             Label {

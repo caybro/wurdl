@@ -50,11 +50,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.qml" line="128"/>
-        <source>Previous score: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../main.qml" line="135"/>
         <source>(counting started on 2021-02-02)</source>
         <translation type="unfinished"></translation>
@@ -97,6 +92,11 @@
     <message>
         <location filename="../main.qml" line="79"/>
         <source>Scores</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.qml" line="128"/>
+        <source>Score: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
