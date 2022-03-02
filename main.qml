@@ -244,7 +244,7 @@ ApplicationWindow {
         readonly property color partialMatchColor: Material.color(Material.Orange)
         readonly property color noMatchColor: Material.color(Material.Grey)
 
-        property int currentGameIndex: Wurdl.todaysWordIndex()
+        property int currentGameIndex: debugMode ? Wurdl.randomWordIndex() : Wurdl.todaysWordIndex()
         onCurrentGameIndexChanged: {
             console.debug("!!! New current game index:", currentGameIndex)
         }

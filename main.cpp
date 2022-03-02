@@ -6,6 +6,7 @@
 #include <QQuickStyle>
 #include <QTouchDevice>
 #include <QTranslator>
+#include <QQmlContext>
 
 int main(int argc, char *argv[])
 {
@@ -38,6 +39,13 @@ int main(int argc, char *argv[])
   app.installTranslator(&qtTranslator);
 
   QQmlApplicationEngine engine;
+
+#ifdef QT_DEBUG
+  engine.rootContext()->setContextProperty(QStringLiteral("debugMode"), true);
+#else
+  engine.rootContext()->setContextProperty(QStringLiteral("debugMode"), false);
+#endif
+
   const QUrl url(QStringLiteral("qrc:/main.qml"));
   QObject::connect(
       &engine, &QQmlApplicationEngine::objectCreated, &app,
